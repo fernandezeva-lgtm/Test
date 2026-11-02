@@ -2,7 +2,8 @@ import "server-only";
 import { AccountType as PlaidAccountType, type AccountBase, type Transaction as PlaidTx } from "plaid";
 import { demoData } from "./demo";
 import { plaid, translateCategory } from "./plaid";
-import { decrypt, listConnections } from "./store";
+import { logError } from "./log";
+import { decrypt, listConnections, tokenAad } from "./store";
 import type { Account, AccountType, Connection, Transaction } from "./types";
 
 export type FinancialSnapshot = {
@@ -28,8 +29,8 @@ function mapType(a: AccountBase): AccountType {
   }
 }
 
-async function plaidData(conn: Connection): Promise<{ accounts: Account[]; transactions: Transaction[] }> {
-  const access_token = decrypt(conn.accessTokenEnc!);
+async function plaidData(userId: string, conn: Connection): Promise<{ accounts: Account[]; transactions: Transaction[] }> {
+  const access_token = decrypt(conn.accessTokenEnc!, tokenAad(userId, conn.id));
   const client = plaid();
 
   const { data: acc } = await client.accountsGet({ access_token });
@@ -76,7 +77,7 @@ async function plaidData(conn: Connection): Promise<{ accounts: Account[]; trans
 export async function getSnapshot(userId: string): Promise<FinancialSnapshot> {
   const connections = await listConnections(userId);
   const results = await Promise.allSettled(
-    connections.map(async (c) => (c.provider === "demo" ? demoData(c) : plaidData(c))),
+    connections.map(async (c) => (c.provider === "demo" ? demoData(c) : plaidData(userId, c))),
   );
 
   const snapshot: FinancialSnapshot = { connections, accounts: [], transactions: [], errors: [] };
@@ -86,7 +87,7 @@ export async function getSnapshot(userId: string): Promise<FinancialSnapshot> {
       snapshot.transactions.push(...r.value.transactions);
     } else {
       const c = connections[i];
-      console.error(`Error obteniendo datos de ${c.bankName}:`, r.reason);
+      logError(`Error obteniendo datos de ${c.bankName}`, r.reason);
       snapshot.errors.push({ connectionId: c.id, bankName: c.bankName, message: "No se pudieron obtener los datos" });
     }
   });

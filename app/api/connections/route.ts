@@ -4,7 +4,8 @@ import { z } from "zod";
 import { currentUserId } from "@/auth";
 import { getBank } from "@/lib/banks";
 import { isPlaidConfigured, plaid } from "@/lib/plaid";
-import { addConnection, decrypt, listConnections, removeConnection } from "@/lib/store";
+import { logError } from "@/lib/log";
+import { addConnection, decrypt, listConnections, removeConnection, tokenAad } from "@/lib/store";
 
 /** Crea una conexión de demostración (solo cuando Plaid no está configurado). */
 export async function POST(req: Request) {
@@ -39,9 +40,11 @@ export async function DELETE(req: Request) {
   const removed = await removeConnection(userId, id);
   if (removed?.provider === "plaid" && removed.accessTokenEnc && isPlaidConfigured()) {
     // Revoca el acceso en Plaid; si falla, la conexión local ya está eliminada.
-    await plaid()
-      .itemRemove({ access_token: decrypt(removed.accessTokenEnc) })
-      .catch((err) => console.error("itemRemove", err));
+    try {
+      await plaid().itemRemove({ access_token: decrypt(removed.accessTokenEnc, tokenAad(userId, removed.id)) });
+    } catch (err) {
+      logError("itemRemove", err);
+    }
   }
   return NextResponse.json({ ok: Boolean(removed) });
 }

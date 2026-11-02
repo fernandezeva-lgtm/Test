@@ -26,6 +26,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
   pages: { signIn: "/" },
   callbacks: {
+    signIn({ account, profile }) {
+      if (account?.provider !== "google") return true;
+      // Solo cuentas de Google con email verificado.
+      if (!profile?.email || profile.email_verified !== true) return false;
+      // Lista blanca opcional: ALLOWED_EMAILS="ana@x.com,@miempresa.es"
+      const allow = (process.env.ALLOWED_EMAILS ?? "").split(",").map((s) => s.trim().toLowerCase()).filter(Boolean);
+      if (allow.length === 0) return true;
+      const email = profile.email.toLowerCase();
+      return allow.some((a) => (a.startsWith("@") ? email.endsWith(a) : email === a));
+    },
     jwt({ token, account, profile }) {
       // Identificador estable del usuario: el "sub" de Google.
       if (account?.provider === "google" && profile?.sub) token.uid = `google:${profile.sub}`;

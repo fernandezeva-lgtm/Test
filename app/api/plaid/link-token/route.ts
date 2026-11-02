@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { CountryCode, Products } from "plaid";
 import { currentUserId } from "@/auth";
+import { logError } from "@/lib/log";
 import { isPlaidConfigured, plaid } from "@/lib/plaid";
 
 export async function POST() {
@@ -18,7 +19,7 @@ export async function POST() {
     });
     return NextResponse.json({ linkToken: data.link_token });
   } catch (err) {
-    console.error("linkTokenCreate", err);
+    logError("linkTokenCreate", err);
     return NextResponse.json({ error: "No se pudo iniciar la conexión con el banco" }, { status: 502 });
   }
 }

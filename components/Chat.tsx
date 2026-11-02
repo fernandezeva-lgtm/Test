@@ -174,7 +174,14 @@ export function Chat() {
                 })}
                 {b.text ? (
                   <div className="prose-chat rounded-3xl rounded-tl-lg bg-surface px-4 py-2 text-[15px] text-ink/90">
-                    <ReactMarkdown remarkPlugins={[remarkGfm]}>{b.text}</ReactMarkdown>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      // Sin imágenes: una imagen con datos en la URL podría filtrarlos a un tercero.
+                      disallowedElements={["img"]}
+                      components={{ a: ({ href, children }) => <a href={href} target="_blank" rel="noopener noreferrer nofollow" className="text-brand-600 underline">{children}</a> }}
+                    >
+                      {b.text}
+                    </ReactMarkdown>
                   </div>
                 ) : (
                   busy && i === bubbles.length - 1 && !b.error && (
