@@ -10,6 +10,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // En GitHub Codespaces la app se sirve detrás de un proxy (*.app.github.dev):
+  // hay que permitir ese origen para que funcionen las server actions (login/logout).
+  ...(process.env.CODESPACES
+    ? { experimental: { serverActions: { allowedOrigins: ["*.app.github.dev", "localhost:3000"] } } }
+    : {}),
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

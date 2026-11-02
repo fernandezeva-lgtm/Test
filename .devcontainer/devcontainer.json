@@ -1,0 +1,11 @@
+{
+  "name": "Mis Finanzas",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "postCreateCommand": "npm install --no-fund --no-audit && npm run setup",
+  "postAttachCommand": "npm run dev",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": { "label": "Mis Finanzas", "onAutoForward": "openBrowser" }
+  },
+  "hostRequirements": { "cpus": 2 }
+}

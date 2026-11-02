@@ -10,7 +10,22 @@ Agregador de cuentas bancarias con asistente financiero de IA, al estilo de Goin
 
 Stack: Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · `plaid` + `react-plaid-link` · `@anthropic-ai/sdk`.
 
-## Puesta en marcha
+## Probar sin instalar nada (móvil o navegador)
+
+Abre este enlace con tu cuenta de GitHub y pulsa **Create codespace**:
+
+**https://codespaces.new/fernandezeva-lgtm/Test?ref=claude/finanzas-agregacion-bancaria-amuwhk**
+
+GitHub prepara la app en la nube (la primera vez tarda 2-3 minutos) y la abre en una pestaña nueva. Entra con
+**"Entrar en modo demo"**. Para usar el asistente Finn, crea un secreto `ANTHROPIC_API_KEY` en
+GitHub → Settings → Codespaces → Secrets, asígnalo a este repositorio y reinicia el codespace.
+
+## En tu ordenador con doble clic
+
+Descarga el código y haz doble clic en **`Abrir Mis Finanzas.command`** (Mac) o **`Abrir Mis Finanzas.bat`**
+(Windows). La primera vez instala lo necesario; después arranca la app y abre el navegador. En Mac, si avisa
+de "desarrollador no identificado", haz clic derecho → Abrir.
+
 
 Necesitas [Node.js](https://nodejs.org) 20 o superior.
 
