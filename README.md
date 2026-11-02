@@ -12,11 +12,15 @@ Stack: Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · `p
 
 ## Puesta en marcha
 
+Necesitas [Node.js](https://nodejs.org) 20 o superior.
+
 ```bash
 npm install
-cp .env.example .env.local   # y rellena las variables
-npm run dev                  # http://localhost:3000
+npm run setup   # crea .env.local con claves generadas y el modo demo activado
+npm run dev     # abre http://localhost:3000 y pulsa "Entrar en modo demo"
 ```
+
+Para usar el asistente Finn, añade tu `ANTHROPIC_API_KEY` en `.env.local` y reinicia `npm run dev`.
 
 ### Variables de entorno
 
