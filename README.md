@@ -1,5 +1,10 @@
 # Mis Finanzas
 
+> **Nuevo:** [`mcp-chat/`](mcp-chat/README.md) es un clon de ChatGPT/Claude basado en **MCP Apps** con un servidor MCP
+> bancario (Banco Finora, simulado) que pinta widgets interactivos (gráficos, formularios, Bizum, transferencias, tarjetas…)
+> y funciona con LLMs gratuitos (Groq, Gemini, OpenRouter, Ollama) o en modo demo sin claves.
+> `cd mcp-chat && npm install && npm start` → http://localhost:8787
+
 Agregador de cuentas bancarias con asistente financiero de IA, al estilo de Goin o Fintonic.
 
 - **Login con Google** (Auth.js / NextAuth v5).

@@ -1,0 +1,16 @@
+{
+  "name": "MCP Chat · Banco Finora",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "postCreateCommand": "cd mcp-chat && npm install --no-fund --no-audit && npm run build",
+  "postAttachCommand": "cd mcp-chat && npm run serve",
+  "forwardPorts": [8787],
+  "portsAttributes": {
+    "8787": { "label": "MCP Chat", "onAutoForward": "openBrowser" }
+  },
+  "secrets": {
+    "GROQ_API_KEY": { "description": "Opcional. Clave gratuita de Groq: https://console.groq.com/keys" },
+    "GEMINI_API_KEY": { "description": "Opcional. Clave gratuita de Google AI Studio: https://aistudio.google.com/apikey" },
+    "OPENROUTER_API_KEY": { "description": "Opcional. Clave de OpenRouter (modelos :free): https://openrouter.ai/keys" }
+  },
+  "hostRequirements": { "cpus": 2 }
+}

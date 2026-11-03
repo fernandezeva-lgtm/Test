@@ -1,0 +1,43 @@
+{
+  "name": "mcp-chat-finora",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@hono/node-server": "^2.1.6",
+    "@modelcontextprotocol/client": "^2.4.0",
+    "@modelcontextprotocol/ext-apps": "^2.0.4",
+    "@modelcontextprotocol/node": "^2.1.2",
+    "@modelcontextprotocol/server": "^2.4.0",
+    "hono": "^4.13.16",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "concurrently": "^10.0.6",
+    "esbuild": "^0.28.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
+  },
+  "scripts": {
+    "dev": "node scripts/build-widgets.mjs && concurrently -k -n widgets,api,web -c magenta,green,cyan \"node scripts/build-widgets.mjs --watch\" \"tsx watch --clear-screen=false src/backend/index.ts\" \"vite\"",
+    "build": "node scripts/build-widgets.mjs && vite build",
+    "start": "npm run build && tsx src/backend/index.ts",
+    "build:widgets": "node scripts/build-widgets.mjs",
+    "mcp:stdio": "tsx src/bank/stdio.ts",
+    "typecheck": "tsc -p .",
+    "test:e2e": "node scripts/e2e.mjs",
+    "serve": "tsx src/backend/index.ts"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
