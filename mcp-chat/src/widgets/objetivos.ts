@@ -22,7 +22,7 @@ interface Data {
 let d: Data;
 let aportando: string | null = null;
 let creando = false;
-const COLORS = ["#10b981", "#6366f1", "#f59e0b", "#ec4899", "#0ea5e9", "#a855f7"];
+const COLORS = ["var(--ds-chart-1)", "var(--ds-chart-2)", "var(--ds-chart-3)", "var(--ds-chart-5)", "var(--ds-chart-4)", "var(--ds-chart-6)"];
 
 async function aportar(o: Obj, importe: number) {
   const r = await call<Data & { mensaje: string }>("aportar_objetivo", { objetivoId: o.id, importe });

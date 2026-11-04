@@ -22,7 +22,7 @@ interface Data {
 
 let d: Data;
 let rango: 6 | 12 | 24 = 24;
-const COL = ["#6366f1", "#a855f7", "#0ea5e9"];
+const COL = ["var(--ds-chart-1)", "var(--ds-chart-2)", "var(--ds-chart-3)"];
 
 function draw() {
   const serie = d.serie.slice(-rango - 1);
@@ -58,7 +58,7 @@ function draw() {
       ),
       line(
         serie.map((p) => mesCorto(p.fecha.slice(0, 7))),
-        [{ name: "Cartera", color: "#6366f1", values: serie.map((p) => p.valor) }],
+        [{ name: "Cartera", color: "var(--ds-chart-1)", values: serie.map((p) => p.valor) }],
         { area: true, fmt: (n) => eur(n, false), height: 180 },
       ),
     ),
@@ -80,7 +80,7 @@ function draw() {
             "div",
             { class: "row small", style: { marginTop: "8px", gap: "4px" } },
             h("span", { class: "muted" }, "Riesgo"),
-            ...Array.from({ length: 7 }, (_, n) => h("span", { style: { width: "18px", height: "6px", borderRadius: "3px", background: n < i.riesgo ? (i.riesgo >= 5 ? "#ef4444" : i.riesgo >= 4 ? "#f59e0b" : "#10b981") : "var(--bg3)" } })),
+            ...Array.from({ length: 7 }, (_, n) => h("span", { style: { width: "18px", height: "6px", borderRadius: "3px", background: n < i.riesgo ? (i.riesgo >= 5 ? "var(--bad)" : i.riesgo >= 4 ? "var(--warn)" : "var(--ok)") : "var(--bg3)" } })),
             h("span", { class: "faint" }, `${i.riesgo}/7`),
             h("span", { class: "sp" }),
             h("a", { class: "link", onclick: () => ask(`¿Debería aumentar mi aportación al ${i.nombre}? Explícame pros y contras según mi perfil.`) }, "Consejo →"),

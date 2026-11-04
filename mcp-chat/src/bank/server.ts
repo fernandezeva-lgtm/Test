@@ -75,7 +75,7 @@ export function createBankServer() {
   // ---------- Recursos UI ----------
   for (const [id, nombre] of Object.entries(WIDGETS) as [WidgetId, string][]) {
     registerAppResource(server, `Widget ${nombre}`, uri(id), { description: `Interfaz interactiva: ${nombre}` }, async () => ({
-      contents: [{ uri: uri(id), mimeType: RESOURCE_MIME_TYPE, text: widgetHtml(id), _meta: { ui: { prefersBorder: true } } }],
+      contents: [{ uri: uri(id), mimeType: RESOURCE_MIME_TYPE, text: widgetHtml(id), _meta: { ui: { prefersBorder: true, csp: { resourceDomains: ["https://fonts.googleapis.com", "https://fonts.gstatic.com"] } } } }],
     }));
   }
 

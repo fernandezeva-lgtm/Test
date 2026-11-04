@@ -69,7 +69,7 @@ export function MessageView({ m, theme, streaming }: { m: UiMessage; theme: "lig
     );
   return (
     <div className="msg assistant">
-      <div className="avatar">✦</div>
+      <div className="avatar">F</div>
       <div className="content">
         {m.parts.map((p, i) => {
           if (p.type === "text") return <Markdown key={i} text={p.text} />;

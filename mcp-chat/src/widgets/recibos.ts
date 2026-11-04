@@ -145,7 +145,7 @@ function vistaRecibos(lista: Recibo[]) {
             h("div", { class: "xs muted" }, cancelado ? "Cancelado" : `${r.periodicidad} · próximo ${fechaCorta(r.proximoCargo)}`),
             r.alerta && !cancelado ? h("span", { class: "badge warn", style: { marginTop: "3px" } }, `🔔 ${r.alerta}`) : null,
           ),
-          r.historico.length > 2 ? sparkline(r.historico.map((x) => x.importe), r.alerta ? "#f59e0b" : "var(--fg3)", 70, 26) : null,
+          r.historico.length > 2 ? sparkline(r.historico.map((x) => x.importe), r.alerta ? "var(--warn)" : "var(--fg3)", 70, 26) : null,
           h("div", { class: "right" }, h("div", { class: "b num" }, eur(r.ultimoImporte)), h("div", { class: "xs faint" }, `media ${eur(r.importeMedio)}`)),
         ),
         abierto === r.id

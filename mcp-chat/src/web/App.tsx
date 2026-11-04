@@ -20,11 +20,16 @@ function Sidebar() {
   return (
     <aside className={`sidebar ${st.sidebar ? "open" : ""}`}>
       <div className="side-top">
+        <div className="brand">
+          <div className="brand-mark">F</div>
+          <div className="brand-name">
+            Finora<small>Asistente · MCP Chat</small>
+          </div>
+        </div>
         <button className="icon-btn" title="Cerrar barra lateral" onClick={() => setState({ sidebar: false })}>☰</button>
-        <button className="icon-btn" title="Nuevo chat" onClick={newChat}>✎</button>
       </div>
       <button className="new-chat" onClick={newChat}>
-        <span className="logo-mini">✦</span> Nuevo chat
+        <span className="logo-mini">+</span> Nuevo chat
       </button>
       <div className="side-section">Conectores</div>
       <div className="connector">
@@ -231,7 +236,10 @@ function Welcome() {
   }, []);
   return (
     <div className="welcome">
-      <h1>¿En qué puedo ayudarte, Lucía?</h1>
+      <div className="eyebrow">Banca Finora · Asistente</div>
+      <h1>
+        ¿En qué puedo ayudarte, <em>Lucía</em>?
+      </h1>
       <Composer big />
       <div className="sugs">
         {prompts.map((s) => (

@@ -64,7 +64,7 @@ function cardVisual(t: Tarjeta) {
       },
     },
     h("div", { class: "row" }, h("span", { class: "b" }, "Finora"), h("span", { class: "sp" }), h("span", { class: "small", style: { opacity: ".9" } }, t.tipo === "credito" ? "CRÉDITO" : t.tipo === "virtual" ? "VIRTUAL" : "DÉBITO")),
-    h("div", { style: { width: "38px", height: "28px", borderRadius: "6px", background: "linear-gradient(135deg,#fde68a,#d97706)", marginTop: "14px", opacity: t.tipo === "virtual" ? "0" : "1" } }),
+    h("div", { style: { width: "38px", height: "28px", borderRadius: "6px", background: "linear-gradient(135deg,#e9edf1,#9aa5b1)", marginTop: "14px", opacity: t.tipo === "virtual" ? "0" : "1" } }),
     h("div", { class: "num", style: { fontSize: "19px", letterSpacing: "2px", marginTop: "auto" } }, t.numero),
     h("div", { class: "row small", style: { marginTop: "8px", opacity: ".92" } }, h("span", { class: "sp" }, t.titular), h("span", null, t.caducidad), h("span", { class: "b", style: { fontStyle: "italic", fontSize: "15px" } }, t.red)),
     t.bloqueada ? h("div", { style: { position: "absolute", inset: "0", display: "grid", placeItems: "center", fontSize: "15px", fontWeight: "700", background: "rgb(0 0 0 / .35)", borderRadius: "16px" } }, "🔒 BLOQUEADA TEMPORALMENTE") : null,
@@ -117,7 +117,7 @@ function draw() {
             { class: "card soft kpi" },
             h("div", { class: "lbl" }, `Crédito disponible`),
             h("div", { class: "val", style: { fontSize: "17px" } }, eur(t.limiteCredito - (t.dispuesto ?? 0))),
-            h("div", { class: "bar", style: { marginTop: "4px", height: "5px" } }, h("i", { style: { width: `${((t.dispuesto ?? 0) / t.limiteCredito) * 100}%`, background: "#d97706" } })),
+            h("div", { class: "bar", style: { marginTop: "4px", height: "5px" } }, h("i", { style: { width: `${((t.dispuesto ?? 0) / t.limiteCredito) * 100}%`, background: "var(--ds-chart-1)" } })),
           )
         : h("div", { class: "card soft kpi" }, h("div", { class: "lbl" }, "PIN"), verPin === "si" ? h("div", { class: "val num", style: { fontSize: "17px", letterSpacing: "4px" } }, "4 7 2 9") : h("a", { class: "link small", onclick: () => ((verPin = "firma"), draw()) }, t.tipo === "virtual" ? "Sin PIN (virtual)" : "👁 Ver PIN")),
     ),

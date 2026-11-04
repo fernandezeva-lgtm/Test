@@ -57,7 +57,7 @@ function draw() {
   const cats = d.porCategoria;
   const top = cats.slice(0, 7);
   const resto = cats.slice(7).reduce((s, c) => s + c.total, 0);
-  const slices = [...top.map((c) => ({ label: c.categoria, value: c.total, color: cat(c.categoria).c })), ...(resto > 0 ? [{ label: "Otros", value: resto, color: "#94a3b8" }] : [])];
+  const slices = [...top.map((c) => ({ label: c.categoria, value: c.total, color: cat(c.categoria).c })), ...(resto > 0 ? [{ label: "Otros", value: resto, color: "var(--ds-chart-4)" }] : [])];
   const mes = mesSel != null ? d.meses[mesSel] : null;
 
   render(
@@ -105,12 +105,12 @@ function draw() {
     h(
       "div",
       { class: "card", style: { marginTop: "10px" } },
-      h("div", { class: "row" }, h("div", { class: "b" }, "Ingresos vs gastos por mes"), h("div", { class: "sp" }), legend([{ label: "Ingresos", color: "#10b981" }, { label: "Gastos", color: "#f97316" }])),
+      h("div", { class: "row" }, h("div", { class: "b" }, "Ingresos vs gastos por mes"), h("div", { class: "sp" }), legend([{ label: "Ingresos", color: "var(--ds-chart-1)" }, { label: "Gastos", color: "var(--ds-chart-2)" }])),
       bars(
         d.meses.map((m) => mesCorto(m.mes)),
         [
-          { name: "Ingresos", color: "#10b981", values: d.meses.map((m) => m.ingresos) },
-          { name: "Gastos", color: "#f97316", values: d.meses.map((m) => m.gastos) },
+          { name: "Ingresos", color: "var(--ds-chart-1)", values: d.meses.map((m) => m.ingresos) },
+          { name: "Gastos", color: "var(--ds-chart-2)", values: d.meses.map((m) => m.gastos) },
         ],
         { fmt: (n) => eur(n, false), highlight: mesSel ?? undefined, onClick: (i) => ((mesSel = mesSel === i ? null : i), draw()) },
       ),

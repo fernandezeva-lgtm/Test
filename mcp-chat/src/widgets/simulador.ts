@@ -139,12 +139,12 @@ function draw() {
     h(
       "div",
       { class: "card", style: { marginTop: "10px" } },
-      h("div", { class: "row" }, h("div", { class: "b" }, "Cuadro de amortización (anual)"), h("div", { class: "sp" }), legend([{ label: "Capital", color: "#10b981" }, { label: "Intereses", color: "#f97316" }])),
+      h("div", { class: "row" }, h("div", { class: "b" }, "Cuadro de amortización (anual)"), h("div", { class: "sp" }), legend([{ label: "Capital", color: "var(--ds-chart-1)" }, { label: "Intereses", color: "var(--ds-chart-2)" }])),
       bars(
         s.cuadroAnual.map((c) => `${c.anio}`),
         [
-          { name: "Capital", color: "#10b981", values: s.cuadroAnual.map((c) => c.amortizado) },
-          { name: "Intereses", color: "#f97316", values: s.cuadroAnual.map((c) => c.intereses) },
+          { name: "Capital", color: "var(--ds-chart-1)", values: s.cuadroAnual.map((c) => c.amortizado) },
+          { name: "Intereses", color: "var(--ds-chart-2)", values: s.cuadroAnual.map((c) => c.intereses) },
         ],
         { stacked: true, fmt: (n) => eur(n, false), height: 170 },
       ),

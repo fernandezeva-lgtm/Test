@@ -136,7 +136,7 @@ function view(d: Data) {
           { class: "card" },
           h("div", { class: "row" }, h("span", null, "🏠"), h("div", { class: "b sp ellipsis" }, p.nombre)),
           h("div", { class: "small muted", style: { margin: "4px 0" } }, `Pendiente ${eur(p.capitalPendiente)} · cuota ${eur(p.cuota)} el ${fecha(p.proximaCuota, { day: "numeric", month: "short" })}`),
-          h("div", { class: "bar" }, h("i", { style: { width: `${amort}%`, background: "#6366f1" } })),
+          h("div", { class: "bar" }, h("i", { style: { width: `${amort}%`, background: "var(--ds-chart-2)" } })),
           h("div", { class: "xs faint", style: { marginTop: "3px" } }, `${pct(amort, 0)} amortizado · TIN ${p.tin}%`),
         );
       }),
@@ -150,7 +150,7 @@ function view(d: Data) {
 
     // Evolución
     section("Evolución de tu liquidez (12 meses)"),
-    h("div", { class: "card" }, line(d.evolucion.map((e) => mesCorto(e.mes)), [{ name: "Saldo", color: "#10a37f", values: ev }], { area: true, fmt: (n) => eur(n, false), height: 170 })),
+    h("div", { class: "card" }, line(d.evolucion.map((e) => mesCorto(e.mes)), [{ name: "Saldo", color: "var(--ds-chart-1)", values: ev }], { area: true, fmt: (n) => eur(n, false), height: 170 })),
 
     // Acciones rápidas
     h(

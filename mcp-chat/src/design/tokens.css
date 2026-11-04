@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Finora DS · tokens
+   Paleta: azules corporativos de banca (familia "azul CaixaBank") + negros.
+   Fuente única para el chat (host) y los widgets MCP Apps.
+   - Primitivos  (--fn-*)         : valores de marca, no cambian con el tema
+   - Semánticos  (--ds-*)         : lo que usan los componentes; cambian en oscuro
+   ========================================================================== */
+:root {
+  /* Azules */
+  --fn-blue-50: #e8f5fb;
+  --fn-blue-100: #cdeaf6;
+  --fn-blue-200: #9dd5ee;
+  --fn-blue-300: #5cbbe4;
+  --fn-blue-400: #23a6dd;
+  --fn-blue-500: #0099d8; /* azul claro de marca */
+  --fn-blue-600: #007eae; /* azul corporativo · primario */
+  --fn-blue-700: #00668e;
+  --fn-blue-800: #004b69;
+  --fn-blue-900: #002f43;
+
+  /* Negros y grises (fríos, sesgados al azul) */
+  --fn-black: #050608;
+  --fn-ink-950: #0b0d10;
+  --fn-ink-900: #121519;
+  --fn-ink-850: #171b20;
+  --fn-ink-800: #1e2329;
+  --fn-ink-700: #2b3138;
+  --fn-ink-600: #3d444d;
+  --fn-ink-500: #5b6470;
+  --fn-ink-400: #87909c;
+  --fn-ink-300: #b4bcc6;
+  --fn-ink-200: #d8dee5;
+  --fn-ink-100: #ebeff3;
+  --fn-ink-50: #f5f7f9;
+  --fn-white: #ffffff;
+
+  /* Estados */
+  --fn-green-600: #00875a;
+  --fn-green-50: #e6f4ee;
+  --fn-amber-600: #b86e00;
+  --fn-amber-50: #fdf3e2;
+  --fn-red-600: #d0021b;
+  --fn-red-50: #fdecee;
+
+  /* Tipografía */
+  --ds-font: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --ds-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --ds-text-xs: 11.5px;
+  --ds-text-sm: 13px;
+  --ds-text-md: 14.5px;
+  --ds-text-lg: 17px;
+  --ds-title: 22px;
+  --ds-display: 30px;
+
+  /* Forma */
+  --ds-radius-xs: 6px;
+  --ds-radius-sm: 8px;
+  --ds-radius-md: 12px;
+  --ds-radius-lg: 16px;
+  --ds-radius-pill: 999px;
+  --ds-shadow-sm: 0 1px 2px rgb(5 6 8 / 0.06), 0 1px 3px rgb(5 6 8 / 0.08);
+  --ds-shadow-md: 0 6px 20px -6px rgb(5 6 8 / 0.18);
+  --ds-shadow-lg: 0 24px 60px -16px rgb(5 6 8 / 0.35);
+
+  /* Semánticos · claro */
+  --ds-canvas: var(--fn-white);
+  --ds-surface: var(--fn-white);
+  --ds-surface-2: var(--fn-ink-50);
+  --ds-surface-3: var(--fn-ink-100);
+  --ds-text: var(--fn-ink-950);
+  --ds-text-2: var(--fn-ink-500);
+  --ds-text-3: var(--fn-ink-400);
+  --ds-border: var(--fn-ink-200);
+  --ds-border-2: var(--fn-ink-100);
+  --ds-primary: var(--fn-blue-600);
+  --ds-primary-hover: var(--fn-blue-700);
+  --ds-primary-text: var(--fn-white);
+  --ds-primary-soft: var(--fn-blue-50);
+  --ds-accent: var(--fn-blue-500);
+  --ds-strong: var(--fn-black); /* superficies negras: sidebar, botón de enviar, burbuja usuaria */
+  --ds-strong-text: var(--fn-white);
+  --ds-strong-2: var(--fn-ink-850);
+  --ds-strong-line: var(--fn-ink-700);
+  --ds-focus: 0 0 0 3px rgb(0 153 216 / 0.35);
+  --ds-success: var(--fn-green-600);
+  --ds-success-soft: var(--fn-green-50);
+  --ds-warning: var(--fn-amber-600);
+  --ds-warning-soft: var(--fn-amber-50);
+  --ds-danger: var(--fn-red-600);
+  --ds-danger-soft: var(--fn-red-50);
+  --ds-info: var(--fn-blue-700);
+  --ds-info-soft: var(--fn-blue-50);
+
+  /* Datos: series de gráficos */
+  --ds-chart-1: var(--fn-blue-600);
+  --ds-chart-2: var(--fn-ink-900);
+  --ds-chart-3: var(--fn-blue-300);
+  --ds-chart-4: var(--fn-ink-400);
+  --ds-chart-5: var(--fn-blue-800);
+  --ds-chart-6: var(--fn-blue-200);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ds-canvas: var(--fn-black);
+    --ds-surface: var(--fn-ink-900);
+    --ds-surface-2: var(--fn-ink-850);
+    --ds-surface-3: var(--fn-ink-800);
+    --ds-text: #eef2f6;
+    --ds-text-2: var(--fn-ink-300);
+    --ds-text-3: var(--fn-ink-400);
+    --ds-border: var(--fn-ink-700);
+    --ds-border-2: var(--fn-ink-800);
+    --ds-primary: var(--fn-blue-400);
+    --ds-primary-hover: var(--fn-blue-300);
+    --ds-primary-text: var(--fn-black);
+    --ds-primary-soft: rgb(0 153 216 / 0.14);
+    --ds-accent: var(--fn-blue-300);
+    --ds-strong: var(--fn-ink-950);
+    --ds-strong-2: var(--fn-ink-850);
+    --ds-success: #3fc18e;
+    --ds-success-soft: rgb(63 193 142 / 0.14);
+    --ds-warning: #f0a83a;
+    --ds-warning-soft: rgb(240 168 58 / 0.14);
+    --ds-danger: #ff5c6c;
+    --ds-danger-soft: rgb(255 92 108 / 0.14);
+    --ds-info: var(--fn-blue-300);
+    --ds-info-soft: rgb(0 153 216 / 0.14);
+    --ds-chart-1: var(--fn-blue-400);
+    --ds-chart-2: var(--fn-ink-200);
+    --ds-chart-3: var(--fn-blue-200);
+    --ds-chart-4: var(--fn-ink-500);
+    --ds-chart-5: var(--fn-blue-600);
+    --ds-chart-6: var(--fn-blue-800);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ds-canvas: var(--fn-black);
+  --ds-surface: var(--fn-ink-900);
+  --ds-surface-2: var(--fn-ink-850);
+  --ds-surface-3: var(--fn-ink-800);
+  --ds-text: #eef2f6;
+  --ds-text-2: var(--fn-ink-300);
+  --ds-text-3: var(--fn-ink-400);
+  --ds-border: var(--fn-ink-700);
+  --ds-border-2: var(--fn-ink-800);
+  --ds-primary: var(--fn-blue-400);
+  --ds-primary-hover: var(--fn-blue-300);
+  --ds-primary-text: var(--fn-black);
+  --ds-primary-soft: rgb(0 153 216 / 0.14);
+  --ds-accent: var(--fn-blue-300);
+  --ds-strong: var(--fn-ink-950);
+  --ds-strong-2: var(--fn-ink-850);
+  --ds-success: #3fc18e;
+  --ds-success-soft: rgb(63 193 142 / 0.14);
+  --ds-warning: #f0a83a;
+  --ds-warning-soft: rgb(240 168 58 / 0.14);
+  --ds-danger: #ff5c6c;
+  --ds-danger-soft: rgb(255 92 108 / 0.14);
+  --ds-info: var(--fn-blue-300);
+  --ds-info-soft: rgb(0 153 216 / 0.14);
+  --ds-chart-1: var(--fn-blue-400);
+  --ds-chart-2: var(--fn-ink-200);
+  --ds-chart-3: var(--fn-blue-200);
+  --ds-chart-4: var(--fn-ink-500);
+  --ds-chart-5: var(--fn-blue-600);
+  --ds-chart-6: var(--fn-blue-800);
+  color-scheme: dark;
+}

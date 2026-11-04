@@ -10,6 +10,7 @@ const src = join(root, "src", "widgets");
 const out = join(root, "dist", "widgets");
 mkdirSync(out, { recursive: true });
 const watch = process.argv.includes("--watch");
+const FONTS = "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap";
 const entries = readdirSync(src).filter((f) => f.endsWith(".ts"));
 
 const htmlPlugin = {
@@ -17,11 +18,11 @@ const htmlPlugin = {
   setup(build) {
     build.onEnd((res) => {
       if (res.errors.length) return;
-      const css = readFileSync(join(src, "lib", "styles.css"), "utf8");
+      const css = readFileSync(join(root, "src", "design", "tokens.css"), "utf8") + readFileSync(join(src, "lib", "styles.css"), "utf8");
       for (const f of res.outputFiles ?? []) {
         const name = f.path.split(/[\\/]/).pop().replace(/\.js$/, "");
         const js = f.text.replace(/<\/script/gi, "<\\/script");
-        const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${name}</title><style>${css}</style></head><body><div id="root"></div><script type="module">${js}</script></body></html>`;
+        const html = `<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${name}</title><link rel="stylesheet" href="${FONTS}"><style>${css}</style></head><body><div id="root"></div><script type="module">${js}</script></body></html>`;
         writeFileSync(join(out, `${name}.html`), html);
       }
       console.log(`[widgets] ${res.outputFiles?.length ?? 0} widgets → dist/widgets`);

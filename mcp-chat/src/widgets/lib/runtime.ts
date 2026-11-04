@@ -54,27 +54,27 @@ export const mesLargo = (ym: string) => new Date(ym + "-15T12:00:00").toLocaleDa
 export const diasHasta = (iso: string) => Math.ceil((new Date(iso + "T12:00:00").getTime() - Date.now()) / 86400000);
 
 export const CAT: Record<string, { e: string; c: string }> = {
-  Nómina: { e: "💼", c: "#10b981" },
-  "Otros ingresos": { e: "💰", c: "#22c55e" },
-  Vivienda: { e: "🏠", c: "#6366f1" },
-  Suministros: { e: "💡", c: "#f59e0b" },
-  Supermercado: { e: "🛒", c: "#14b8a6" },
-  Restaurantes: { e: "🍽️", c: "#f97316" },
-  Transporte: { e: "🚗", c: "#3b82f6" },
-  Compras: { e: "🛍️", c: "#ec4899" },
-  Ocio: { e: "🎬", c: "#a855f7" },
-  Suscripciones: { e: "🔁", c: "#8b5cf6" },
-  Salud: { e: "🩺", c: "#06b6d4" },
-  Viajes: { e: "✈️", c: "#0ea5e9" },
-  Seguros: { e: "🛡️", c: "#64748b" },
-  Bizum: { e: "📲", c: "#0d9488" },
-  Transferencias: { e: "🔄", c: "#84cc16" },
-  Ahorro: { e: "🐷", c: "#10b981" },
-  Efectivo: { e: "🏧", c: "#78716c" },
-  Impuestos: { e: "🏛️", c: "#ef4444" },
-  Intereses: { e: "📈", c: "#22c55e" },
+  Nómina: { e: "💼", c: "#007eae" },
+  "Otros ingresos": { e: "💰", c: "#0099d8" },
+  Vivienda: { e: "🏠", c: "var(--ds-chart-2)" },
+  Suministros: { e: "💡", c: "#5cbbe4" },
+  Supermercado: { e: "🛒", c: "#007eae" },
+  Restaurantes: { e: "🍽️", c: "#0099d8" },
+  Transporte: { e: "🚗", c: "#87909c" },
+  Compras: { e: "🛍️", c: "#00668e" },
+  Ocio: { e: "🎬", c: "#23a6dd" },
+  Suscripciones: { e: "🔁", c: "#4f7a94" },
+  Salud: { e: "🩺", c: "#7fc8e8" },
+  Viajes: { e: "✈️", c: "#9dd5ee" },
+  Seguros: { e: "🛡️", c: "#5b6470" },
+  Bizum: { e: "📲", c: "#0e8fc4" },
+  Transferencias: { e: "🔄", c: "#3d6b85" },
+  Ahorro: { e: "🐷", c: "#007eae" },
+  Efectivo: { e: "🏧", c: "#b4bcc6" },
+  Impuestos: { e: "🏛️", c: "#6b7682" },
+  Intereses: { e: "📈", c: "#0099d8" },
 };
-export const cat = (c: string) => CAT[c] ?? { e: "•", c: "#94a3b8" };
+export const cat = (c: string) => CAT[c] ?? { e: "•", c: "#87909c" };
 
 // ---------------- UI pequeñas ----------------
 let toastEl: HTMLDivElement | null = null;
@@ -90,7 +90,7 @@ export function toast(msg: string, bad = false) {
 }
 
 export function header(titulo: string, sub?: string, ...extra: Child[]) {
-  return h("div", { class: "hdr" }, h("div", { class: "logo" }, "F"), h("div", null, h("h2", null, titulo), sub ? h("div", { class: "sub" }, sub) : null), h("div", { class: "sp" }), ...extra);
+  return h("div", { class: "hdr" }, h("div", { class: "logo" }, h("span", null, "F")), h("div", null, h("h2", null, titulo), sub ? h("div", { class: "sub" }, sub) : null), h("div", { class: "sp" }), ...extra);
 }
 
 export function toggle(checked: boolean, onChange: (v: boolean) => void, danger = false) {

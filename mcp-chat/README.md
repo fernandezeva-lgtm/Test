@@ -71,6 +71,13 @@ O en el servidor, copiando `.env.example` a `.env`:
 
 La lista de modelos se consulta en vivo al proveedor (`/models`), así que puedes elegir cualquiera que soporte *tool calling*.
 
+## Design system
+
+La interfaz usa **Finora DS**: azules corporativos de banca (familia del azul CaixaBank) sobre negros, tipografía
+Plus Jakarta Sans y modo claro/oscuro. Tokens en [`src/design/tokens.css`](src/design/tokens.css) y guía en
+[`src/design/README.md`](src/design/README.md). El chat los comparte con los widgets mediante las variables estándar
+de MCP Apps, así que todos los widgets heredan la identidad.
+
 ## Arquitectura
 
 ```

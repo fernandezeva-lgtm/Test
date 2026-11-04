@@ -1,8 +1,9 @@
 // Variables de estilo estándar de MCP Apps que el host comparte con los widgets.
+// Valores de Finora DS (src/design/tokens.css): azules corporativos + negros.
 import type { McpUiHostStyles, McpUiStyles } from "@modelcontextprotocol/ext-apps";
 
 const common = {
-  "--font-sans": `"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`,
+  "--font-sans": `"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif`,
   "--font-mono": `ui-monospace, SFMono-Regular, Menlo, monospace`,
   "--border-radius-xs": "4px",
   "--border-radius-sm": "8px",
@@ -19,46 +20,52 @@ const common = {
 
 const light = {
   "--color-background-primary": "#ffffff",
-  "--color-background-secondary": "#f7f7f8",
-  "--color-background-tertiary": "#ececf1",
-  "--color-background-inverse": "#0d0d0d",
-  "--color-background-info": "#eff6ff",
-  "--color-background-danger": "#fef2f2",
-  "--color-background-success": "#ecfdf5",
-  "--color-background-warning": "#fffbeb",
-  "--color-text-primary": "#0d0d0d",
-  "--color-text-secondary": "#5d5d66",
-  "--color-text-tertiary": "#8e8ea0",
+  "--color-background-secondary": "#f5f7f9",
+  "--color-background-tertiary": "#ebeff3",
+  "--color-background-inverse": "#050608",
+  "--color-background-info": "#e8f5fb",
+  "--color-background-danger": "#fdecee",
+  "--color-background-success": "#e6f4ee",
+  "--color-background-warning": "#fdf3e2",
+  "--color-text-primary": "#0b0d10",
+  "--color-text-secondary": "#5b6470",
+  "--color-text-tertiary": "#87909c",
   "--color-text-inverse": "#ffffff",
-  "--color-text-info": "#2563eb",
-  "--color-text-danger": "#dc2626",
-  "--color-text-success": "#059669",
-  "--color-text-warning": "#b45309",
-  "--color-border-primary": "#e5e5e9",
-  "--color-border-secondary": "#efeff2",
+  "--color-text-info": "#00668e",
+  "--color-text-danger": "#d0021b",
+  "--color-text-success": "#00875a",
+  "--color-text-warning": "#b86e00",
+  "--color-border-primary": "#d8dee5",
+  "--color-border-secondary": "#ebeff3",
+  "--color-ring-primary": "#0099d8",
 };
 
 const dark = {
-  "--color-background-primary": "#212121",
-  "--color-background-secondary": "#2a2a2a",
-  "--color-background-tertiary": "#363636",
-  "--color-background-inverse": "#ececec",
-  "--color-background-info": "#172a45",
-  "--color-background-danger": "#3b1d1d",
-  "--color-background-success": "#10332a",
-  "--color-background-warning": "#3a2e12",
-  "--color-text-primary": "#ececec",
-  "--color-text-secondary": "#b4b4b4",
-  "--color-text-tertiary": "#8a8a8a",
-  "--color-text-inverse": "#0d0d0d",
-  "--color-text-info": "#60a5fa",
-  "--color-text-danger": "#f87171",
-  "--color-text-success": "#34d399",
-  "--color-text-warning": "#fbbf24",
-  "--color-border-primary": "#3d3d3d",
-  "--color-border-secondary": "#2f2f2f",
+  "--color-background-primary": "#121519",
+  "--color-background-secondary": "#171b20",
+  "--color-background-tertiary": "#1e2329",
+  "--color-background-inverse": "#eef2f6",
+  "--color-background-info": "#0b2a38",
+  "--color-background-danger": "#3a1418",
+  "--color-background-success": "#0e2e22",
+  "--color-background-warning": "#33260e",
+  "--color-text-primary": "#eef2f6",
+  "--color-text-secondary": "#b4bcc6",
+  "--color-text-tertiary": "#87909c",
+  "--color-text-inverse": "#050608",
+  "--color-text-info": "#5cbbe4",
+  "--color-text-danger": "#ff5c6c",
+  "--color-text-success": "#3fc18e",
+  "--color-text-warning": "#f0a83a",
+  "--color-border-primary": "#2b3138",
+  "--color-border-secondary": "#1e2329",
+  "--color-ring-primary": "#23a6dd",
 };
 
 export function hostStyles(theme: "light" | "dark"): McpUiHostStyles {
-  return { variables: { ...common, ...(theme === "dark" ? dark : light) } as McpUiStyles };
+  return {
+    variables: { ...common, ...(theme === "dark" ? dark : light) } as McpUiStyles,
+    // Tipografía del DS: el widget la inyecta (su CSP la permite vía _meta.ui.csp).
+    css: { fonts: `@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");` },
+  };
 }
