@@ -12,9 +12,28 @@ con un **modo demo** que simula el LLM con reglas.
 |---|---|---|
 | ![Bienvenida](docs/welcome.png) | ![Bizum](docs/bizum.png) | ![Móvil](docs/movil.png) |
 
-## Arrancar
+## Arrancar (lanzadera)
 
-Necesitas Node.js 20 o superior.
+**Opción 1 · Doble clic en tu ordenador** (necesitas [Node.js](https://nodejs.org) 20+):
+
+| Sistema | Archivo (en la raíz del repo) |
+|---|---|
+| Mac | `Abrir MCP Chat.command` (si avisa de "desarrollador no identificado": clic derecho → Abrir) |
+| Windows | `Abrir MCP Chat.bat` |
+| Linux | `./abrir-mcp-chat.sh` |
+
+La lanzadera instala dependencias la primera vez, compila, te pregunta si quieres conectar un LLM gratuito
+(Groq / Gemini / OpenRouter, o Enter para modo demo), busca un puerto libre y abre el navegador.
+Equivale a `cd mcp-chat && npm run lanzar`.
+
+**Opción 2 · En el navegador o el móvil, sin instalar nada (GitHub Codespaces):**
+
+[![Abrir en Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/fernandezeva-lgtm/Test?ref=ccr-98029570-sgtshm&devcontainer_path=.devcontainer/mcp-chat/devcontainer.json)
+
+Pulsa **Create codespace**; en 2-3 minutos se abre la app. Para usar un LLM real, crea el secreto
+`GROQ_API_KEY` (o `GEMINI_API_KEY`) en GitHub → Settings → Codespaces → Secrets, o pégalo en ⚙︎ Ajustes.
+
+**Opción 3 · Terminal:**
 
 ```bash
 cd mcp-chat
@@ -22,14 +41,11 @@ npm install
 npm start          # compila y abre en http://localhost:8787
 ```
 
-Entra y prueba: *“¿Cuánto dinero tengo?”*, *“¿En qué gasto más?”*, *“Envía 25 € a Marta por Bizum”*,
+Prueba: *“¿Cuánto dinero tengo?”*, *“¿En qué gasto más?”*, *“Envía 25 € a Marta por Bizum”*,
 *“Veo un cargo raro de PayPal”*, *“Simula un préstamo de coche de 28.000 €”*…
 En la demo, el código de firma (OTP) es cualquier número de 6 dígitos (`000000` simula un error).
 
 Para desarrollo con recarga en caliente: `npm run dev` y abre http://localhost:5173.
-
-**Codespaces (sin instalar nada):**
-https://codespaces.new/fernandezeva-lgtm/Test?devcontainer_path=.devcontainer/mcp-chat/devcontainer.json
 
 ### Conectar un LLM gratuito
 
@@ -142,6 +158,7 @@ El servidor es un MCP estándar, así que sus widgets también funcionan en clie
 
 | Comando | Qué hace |
 |---|---|
+| `npm run lanzar` | Lanzadera: instala, compila si hace falta, configura LLM y abre el navegador |
 | `npm start` | Compila widgets y web y sirve todo en `:8787` |
 | `npm run dev` | Widgets en modo watch + backend con recarga + Vite en `:5173` |
 | `npm run build` | Compila `dist/widgets/*.html` y `dist/web` |

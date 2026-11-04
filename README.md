@@ -3,7 +3,8 @@
 > **Nuevo:** [`mcp-chat/`](mcp-chat/README.md) es un clon de ChatGPT/Claude basado en **MCP Apps** con un servidor MCP
 > bancario (Banco Finora, simulado) que pinta widgets interactivos (gráficos, formularios, Bizum, transferencias, tarjetas…)
 > y funciona con LLMs gratuitos (Groq, Gemini, OpenRouter, Ollama) o en modo demo sin claves.
-> `cd mcp-chat && npm install && npm start` → http://localhost:8787
+> **Pruébalo:** doble clic en `Abrir MCP Chat.command` (Mac) / `Abrir MCP Chat.bat` (Windows) / `abrir-mcp-chat.sh` (Linux),
+> o [ábrelo en Codespaces](https://codespaces.new/fernandezeva-lgtm/Test?ref=ccr-98029570-sgtshm&devcontainer_path=.devcontainer/mcp-chat/devcontainer.json).
 
 Agregador de cuentas bancarias con asistente financiero de IA, al estilo de Goin o Fintonic.
 

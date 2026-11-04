@@ -35,7 +35,8 @@
     "mcp:stdio": "tsx src/bank/stdio.ts",
     "typecheck": "tsc -p .",
     "test:e2e": "node scripts/e2e.mjs",
-    "serve": "tsx src/backend/index.ts"
+    "serve": "tsx src/backend/index.ts",
+    "lanzar": "node scripts/launch.mjs"
   },
   "engines": {
     "node": ">=20"
