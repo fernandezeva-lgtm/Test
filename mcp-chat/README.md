@@ -33,6 +33,15 @@ Equivale a `cd mcp-chat && npm run lanzar`.
 Pulsa **Create codespace**; en 2-3 minutos se abre la app. Para usar un LLM real, crea el secreto
 `GROQ_API_KEY` (o `GEMINI_API_KEY`) en GitHub → Settings → Codespaces → Secrets, o pégalo en ⚙︎ Ajustes.
 
+**En el móvil:**
+
+- *Sin ordenador:* abre el enlace de Codespaces de arriba en el navegador del móvil (Safari/Chrome), entra con
+  GitHub y pulsa **Create codespace**. Si la app no se abre sola, ve a la pestaña **Ports** y toca el globo 🌐 del
+  puerto 8787. Esa dirección `https://…app.github.dev` puedes guardarla con **Añadir a pantalla de inicio**.
+- *Con tu ordenador en la misma Wi-Fi:* arranca la lanzadera en el ordenador; la consola muestra
+  `📱 Desde el móvil (misma Wi-Fi): http://192.168.x.x:8787`. Escríbela en el navegador del móvil
+  (si el sistema pregunta por el cortafuegos, permite el acceso en redes privadas).
+
 **Opción 3 · Terminal:**
 
 ```bash

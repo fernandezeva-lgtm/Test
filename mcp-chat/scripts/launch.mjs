@@ -4,6 +4,7 @@
 import { spawn, spawnSync } from "node:child_process";
 import { existsSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import net from "node:net";
+import os from "node:os";
 import path from "node:path";
 import readline from "node:readline/promises";
 import { fileURLToPath } from "node:url";
@@ -101,6 +102,11 @@ async function waitAndOpen() {
       const res = await fetch(`${url}/api/health`);
       if (res.ok) {
         console.log(`✔ MCP Chat está abierto en ${url}`);
+        const lan = Object.values(os.networkInterfaces())
+          .flat()
+          .filter((i) => i && i.family === "IPv4" && !i.internal && /^(192\.168|10\.|172\.(1[6-9]|2\d|3[01]))/.test(i.address))
+          .map((i) => `http://${i.address}:${port}`);
+        if (lan.length) console.log(`  📱 Desde el móvil (misma Wi-Fi): ${lan.join("  o  ")}`);
         console.log(`  Servidor MCP para otros clientes: ${url}/mcp`);
         console.log("  Para cerrarlo, vuelve a esta ventana y pulsa Ctrl + C.\n");
         return openBrowser();
