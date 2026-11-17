@@ -1,170 +1,186 @@
 /* ==========================================================================
    Finora DS · tokens
-   Paleta: azules corporativos de banca (familia "azul CaixaBank") + negros.
+   Estilo de app bancaria móvil: lienzo gris claro, tarjetas blancas planas sin borde,
+   negro azulado para botones y chips activos, azul cielo / amarillo / melocotón para
+   tarjetas destacadas, azul petróleo para el banner de ayuda y verde para importes a favor.
    Fuente única para el chat (host) y los widgets MCP Apps.
-   - Primitivos  (--fn-*)         : valores de marca, no cambian con el tema
-   - Semánticos  (--ds-*)         : lo que usan los componentes; cambian en oscuro
+   - Primitivos  (--fn-*)  : valores de marca, no cambian con el tema
+   - Semánticos  (--ds-*)  : lo que usan los componentes; cambian en oscuro
    ========================================================================== */
 :root {
-  /* Azules */
-  --fn-blue-50: #e8f5fb;
-  --fn-blue-100: #cdeaf6;
-  --fn-blue-200: #9dd5ee;
-  --fn-blue-300: #5cbbe4;
-  --fn-blue-400: #23a6dd;
-  --fn-blue-500: #0099d8; /* azul claro de marca */
-  --fn-blue-600: #007eae; /* azul corporativo · primario */
-  --fn-blue-700: #00668e;
-  --fn-blue-800: #004b69;
-  --fn-blue-900: #002f43;
-
-  /* Negros y grises (fríos, sesgados al azul) */
-  --fn-black: #050608;
-  --fn-ink-950: #0b0d10;
-  --fn-ink-900: #121519;
-  --fn-ink-850: #171b20;
-  --fn-ink-800: #1e2329;
-  --fn-ink-700: #2b3138;
-  --fn-ink-600: #3d444d;
-  --fn-ink-500: #5b6470;
-  --fn-ink-400: #87909c;
-  --fn-ink-300: #b4bcc6;
-  --fn-ink-200: #d8dee5;
-  --fn-ink-100: #ebeff3;
-  --fn-ink-50: #f5f7f9;
+  /* Negro azulado (texto, botones, chips activos) */
+  --fn-ink: #1b2129;
+  --fn-ink-2: #2c333d;
+  /* Grises */
+  --fn-gray-900: #1b2129;
+  --fn-gray-700: #474e57;
+  --fn-gray-600: #5f6670;
+  --fn-gray-500: #7b828b;
+  --fn-gray-400: #8c96a2; /* "Pendiente" */
+  --fn-gray-300: #c3c8ce;
+  --fn-gray-200: #dfe2e5;
+  --fn-gray-150: #e9ebed;
+  --fn-gray-100: #f2f2f2; /* lienzo */
   --fn-white: #ffffff;
-
+  /* Azules */
+  --fn-blue: #3d9be0; /* "Recibido", series principales */
+  --fn-blue-link: #1f5c8a; /* enlaces subrayados */
+  --fn-sky: #9ccff5; /* tarjeta destacada azul */
+  --fn-sky-soft: #d6ebfb;
+  --fn-petrol: #1e4a66; /* banner "¿Tienes dudas?" */
+  --fn-petrol-2: #2a6085;
+  /* Cálidos */
+  --fn-sun: #f5d04b; /* tarjeta destacada amarilla */
+  --fn-sun-soft: #fbedb4;
+  --fn-peach: #f6c79b;
+  --fn-peach-soft: #fbe4cf;
   /* Estados */
-  --fn-green-600: #00875a;
-  --fn-green-50: #e6f4ee;
-  --fn-amber-600: #b86e00;
-  --fn-amber-50: #fdf3e2;
-  --fn-red-600: #d0021b;
-  --fn-red-50: #fdecee;
+  --fn-green: #2e7d32;
+  --fn-green-soft: #e3f1e4;
+  --fn-amber: #9a6400;
+  --fn-amber-soft: #fdf0d2;
+  --fn-red: #c62828;
+  --fn-red-soft: #fbe7e7;
 
-  /* Tipografía */
-  --ds-font: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* Tipografía: Figtree (libre, Google Fonts), geométrica y amable; titulares muy gruesos */
+  --ds-font: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --ds-font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-  --ds-text-xs: 11.5px;
-  --ds-text-sm: 13px;
-  --ds-text-md: 14.5px;
-  --ds-text-lg: 17px;
+  --ds-text-xs: 12px;
+  --ds-text-sm: 13.5px;
+  --ds-text-md: 15px;
+  --ds-text-lg: 18px;
   --ds-title: 22px;
-  --ds-display: 30px;
+  --ds-display: 32px;
 
-  /* Forma */
+  /* Forma: plana, sin sombras; esquinas generosas */
   --ds-radius-xs: 6px;
-  --ds-radius-sm: 8px;
-  --ds-radius-md: 12px;
-  --ds-radius-lg: 16px;
+  --ds-radius-sm: 10px;
+  --ds-radius-md: 14px;
+  --ds-radius-lg: 18px;
   --ds-radius-pill: 999px;
-  --ds-shadow-sm: 0 1px 2px rgb(5 6 8 / 0.06), 0 1px 3px rgb(5 6 8 / 0.08);
-  --ds-shadow-md: 0 6px 20px -6px rgb(5 6 8 / 0.18);
-  --ds-shadow-lg: 0 24px 60px -16px rgb(5 6 8 / 0.35);
+  --ds-shadow-sm: none;
+  --ds-shadow-md: 0 8px 24px -12px rgb(27 33 41 / 0.18);
+  --ds-shadow-lg: 0 24px 60px -16px rgb(27 33 41 / 0.32);
 
   /* Semánticos · claro */
-  --ds-canvas: var(--fn-white);
+  --ds-canvas: var(--fn-gray-100);
   --ds-surface: var(--fn-white);
-  --ds-surface-2: var(--fn-ink-50);
-  --ds-surface-3: var(--fn-ink-100);
-  --ds-text: var(--fn-ink-950);
-  --ds-text-2: var(--fn-ink-500);
-  --ds-text-3: var(--fn-ink-400);
-  --ds-border: var(--fn-ink-200);
-  --ds-border-2: var(--fn-ink-100);
-  --ds-primary: var(--fn-blue-600);
-  --ds-primary-hover: var(--fn-blue-700);
+  --ds-surface-2: var(--fn-gray-100);
+  --ds-surface-3: var(--fn-gray-150);
+  --ds-text: var(--fn-ink);
+  --ds-text-2: var(--fn-gray-600);
+  --ds-text-3: var(--fn-gray-500);
+  --ds-border: var(--fn-gray-200);
+  --ds-border-2: var(--fn-gray-150);
+  --ds-outline: var(--fn-gray-700); /* borde de chips sin seleccionar */
+  --ds-primary: var(--fn-ink); /* botones principales y chips activos */
+  --ds-primary-hover: var(--fn-ink-2);
   --ds-primary-text: var(--fn-white);
-  --ds-primary-soft: var(--fn-blue-50);
-  --ds-accent: var(--fn-blue-500);
-  --ds-strong: var(--fn-black); /* superficies negras: sidebar, botón de enviar, burbuja usuaria */
+  --ds-primary-soft: var(--fn-sky-soft);
+  --ds-accent: var(--fn-blue); /* interruptores, foco, gráficos */
+  --ds-link: var(--fn-blue-link);
+  --ds-strong: var(--fn-ink);
   --ds-strong-text: var(--fn-white);
-  --ds-strong-2: var(--fn-ink-850);
-  --ds-strong-line: var(--fn-ink-700);
-  --ds-focus: 0 0 0 3px rgb(0 153 216 / 0.35);
-  --ds-success: var(--fn-green-600);
-  --ds-success-soft: var(--fn-green-50);
-  --ds-warning: var(--fn-amber-600);
-  --ds-warning-soft: var(--fn-amber-50);
-  --ds-danger: var(--fn-red-600);
-  --ds-danger-soft: var(--fn-red-50);
-  --ds-info: var(--fn-blue-700);
-  --ds-info-soft: var(--fn-blue-50);
+  --ds-strong-2: var(--fn-ink-2);
+  --ds-strong-line: var(--fn-gray-700);
+  --ds-help: var(--fn-petrol);
+  --ds-help-text: var(--fn-white);
+  --ds-promo-1: var(--fn-sky);
+  --ds-promo-2: var(--fn-sun);
+  --ds-promo-3: var(--fn-peach);
+  --ds-promo-text: var(--fn-ink);
+  --ds-focus: 0 0 0 3px rgb(61 155 224 / 0.35);
+  --ds-success: var(--fn-green);
+  --ds-success-soft: var(--fn-green-soft);
+  --ds-warning: var(--fn-amber);
+  --ds-warning-soft: var(--fn-amber-soft);
+  --ds-danger: var(--fn-red);
+  --ds-danger-soft: var(--fn-red-soft);
+  --ds-info: var(--fn-blue-link);
+  --ds-info-soft: var(--fn-sky-soft);
 
   /* Datos: series de gráficos */
-  --ds-chart-1: var(--fn-blue-600);
-  --ds-chart-2: var(--fn-ink-900);
-  --ds-chart-3: var(--fn-blue-300);
-  --ds-chart-4: var(--fn-ink-400);
-  --ds-chart-5: var(--fn-blue-800);
-  --ds-chart-6: var(--fn-blue-200);
+  --ds-chart-1: var(--fn-blue);
+  --ds-chart-2: var(--fn-gray-400);
+  --ds-chart-3: var(--fn-ink);
+  --ds-chart-4: var(--fn-sky);
+  --ds-chart-5: var(--fn-sun);
+  --ds-chart-6: var(--fn-petrol);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ds-canvas: var(--fn-black);
-    --ds-surface: var(--fn-ink-900);
-    --ds-surface-2: var(--fn-ink-850);
-    --ds-surface-3: var(--fn-ink-800);
-    --ds-text: #eef2f6;
-    --ds-text-2: var(--fn-ink-300);
-    --ds-text-3: var(--fn-ink-400);
-    --ds-border: var(--fn-ink-700);
-    --ds-border-2: var(--fn-ink-800);
-    --ds-primary: var(--fn-blue-400);
-    --ds-primary-hover: var(--fn-blue-300);
-    --ds-primary-text: var(--fn-black);
-    --ds-primary-soft: rgb(0 153 216 / 0.14);
-    --ds-accent: var(--fn-blue-300);
-    --ds-strong: var(--fn-ink-950);
-    --ds-strong-2: var(--fn-ink-850);
-    --ds-success: #3fc18e;
-    --ds-success-soft: rgb(63 193 142 / 0.14);
-    --ds-warning: #f0a83a;
-    --ds-warning-soft: rgb(240 168 58 / 0.14);
-    --ds-danger: #ff5c6c;
-    --ds-danger-soft: rgb(255 92 108 / 0.14);
-    --ds-info: var(--fn-blue-300);
-    --ds-info-soft: rgb(0 153 216 / 0.14);
-    --ds-chart-1: var(--fn-blue-400);
-    --ds-chart-2: var(--fn-ink-200);
-    --ds-chart-3: var(--fn-blue-200);
-    --ds-chart-4: var(--fn-ink-500);
-    --ds-chart-5: var(--fn-blue-600);
-    --ds-chart-6: var(--fn-blue-800);
+    --ds-canvas: #0f1317;
+    --ds-surface: #1a1f25;
+    --ds-surface-2: #14181d;
+    --ds-surface-3: #242a31;
+    --ds-text: #eef1f4;
+    --ds-text-2: #b3bac2;
+    --ds-text-3: #8a929b;
+    --ds-border: #2c333b;
+    --ds-border-2: #242a31;
+    --ds-outline: #8a929b;
+    --ds-primary: #eef1f4;
+    --ds-primary-hover: #ffffff;
+    --ds-primary-text: #1b2129;
+    --ds-primary-soft: rgb(156 207 245 / 0.16);
+    --ds-accent: #6db6ec;
+    --ds-link: #8cc6f2;
+    --ds-strong: #eef1f4;
+    --ds-strong-text: #1b2129;
+    --ds-strong-2: #d7dce1;
+    --ds-help: #163a51;
+    --ds-success: #6cc070;
+    --ds-success-soft: rgb(108 192 112 / 0.15);
+    --ds-warning: #f0bb4a;
+    --ds-warning-soft: rgb(240 187 74 / 0.15);
+    --ds-danger: #ff7a7a;
+    --ds-danger-soft: rgb(255 122 122 / 0.15);
+    --ds-info: #8cc6f2;
+    --ds-info-soft: rgb(156 207 245 / 0.14);
+    --ds-chart-1: #6db6ec;
+    --ds-chart-2: #8c96a2;
+    --ds-chart-3: #eef1f4;
+    --ds-chart-4: #9ccff5;
+    --ds-chart-5: #f5d04b;
+    --ds-chart-6: #4f8fb8;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --ds-canvas: var(--fn-black);
-  --ds-surface: var(--fn-ink-900);
-  --ds-surface-2: var(--fn-ink-850);
-  --ds-surface-3: var(--fn-ink-800);
-  --ds-text: #eef2f6;
-  --ds-text-2: var(--fn-ink-300);
-  --ds-text-3: var(--fn-ink-400);
-  --ds-border: var(--fn-ink-700);
-  --ds-border-2: var(--fn-ink-800);
-  --ds-primary: var(--fn-blue-400);
-  --ds-primary-hover: var(--fn-blue-300);
-  --ds-primary-text: var(--fn-black);
-  --ds-primary-soft: rgb(0 153 216 / 0.14);
-  --ds-accent: var(--fn-blue-300);
-  --ds-strong: var(--fn-ink-950);
-  --ds-strong-2: var(--fn-ink-850);
-  --ds-success: #3fc18e;
-  --ds-success-soft: rgb(63 193 142 / 0.14);
-  --ds-warning: #f0a83a;
-  --ds-warning-soft: rgb(240 168 58 / 0.14);
-  --ds-danger: #ff5c6c;
-  --ds-danger-soft: rgb(255 92 108 / 0.14);
-  --ds-info: var(--fn-blue-300);
-  --ds-info-soft: rgb(0 153 216 / 0.14);
-  --ds-chart-1: var(--fn-blue-400);
-  --ds-chart-2: var(--fn-ink-200);
-  --ds-chart-3: var(--fn-blue-200);
-  --ds-chart-4: var(--fn-ink-500);
-  --ds-chart-5: var(--fn-blue-600);
-  --ds-chart-6: var(--fn-blue-800);
+  --ds-canvas: #0f1317;
+  --ds-surface: #1a1f25;
+  --ds-surface-2: #14181d;
+  --ds-surface-3: #242a31;
+  --ds-text: #eef1f4;
+  --ds-text-2: #b3bac2;
+  --ds-text-3: #8a929b;
+  --ds-border: #2c333b;
+  --ds-border-2: #242a31;
+  --ds-outline: #8a929b;
+  --ds-primary: #eef1f4;
+  --ds-primary-hover: #ffffff;
+  --ds-primary-text: #1b2129;
+  --ds-primary-soft: rgb(156 207 245 / 0.16);
+  --ds-accent: #6db6ec;
+  --ds-link: #8cc6f2;
+  --ds-strong: #eef1f4;
+  --ds-strong-text: #1b2129;
+  --ds-strong-2: #d7dce1;
+  --ds-help: #163a51;
+  --ds-success: #6cc070;
+  --ds-success-soft: rgb(108 192 112 / 0.15);
+  --ds-warning: #f0bb4a;
+  --ds-warning-soft: rgb(240 187 74 / 0.15);
+  --ds-danger: #ff7a7a;
+  --ds-danger-soft: rgb(255 122 122 / 0.15);
+  --ds-info: #8cc6f2;
+  --ds-info-soft: rgb(156 207 245 / 0.14);
+  --ds-chart-1: #6db6ec;
+  --ds-chart-2: #8c96a2;
+  --ds-chart-3: #eef1f4;
+  --ds-chart-4: #9ccff5;
+  --ds-chart-5: #f5d04b;
+  --ds-chart-6: #4f8fb8;
   color-scheme: dark;
 }

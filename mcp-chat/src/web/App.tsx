@@ -249,6 +249,13 @@ function Welcome() {
           </button>
         ))}
       </div>
+      <div className="help-banner">
+        <div>
+          <b>¿Tienes dudas?</b>
+          <span>Te ayudamos a resolverlas</span>
+        </div>
+        <button onClick={() => send("Abre el centro de ayuda")}>Abrir ayuda</button>
+      </div>
     </div>
   );
 }

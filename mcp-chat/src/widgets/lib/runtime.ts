@@ -9,6 +9,15 @@ import {
 } from "@modelcontextprotocol/ext-apps";
 import type { CallToolResult } from "@modelcontextprotocol/client";
 
+// Tipografía de Finora DS, cargada sin bloquear el arranque del widget (el host también puede enviarla).
+try {
+  document.head.append(
+    Object.assign(document.createElement("link"), { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" }),
+  );
+} catch {
+  /* sin DOM */
+}
+
 // ---------------- DOM ----------------
 type Child = Node | string | number | false | null | undefined | Child[];
 type Props = Record<string, unknown> & { class?: string; style?: string | Record<string, string> };
@@ -54,25 +63,25 @@ export const mesLargo = (ym: string) => new Date(ym + "-15T12:00:00").toLocaleDa
 export const diasHasta = (iso: string) => Math.ceil((new Date(iso + "T12:00:00").getTime() - Date.now()) / 86400000);
 
 export const CAT: Record<string, { e: string; c: string }> = {
-  Nómina: { e: "💼", c: "#007eae" },
-  "Otros ingresos": { e: "💰", c: "#0099d8" },
-  Vivienda: { e: "🏠", c: "var(--ds-chart-2)" },
-  Suministros: { e: "💡", c: "#5cbbe4" },
-  Supermercado: { e: "🛒", c: "#007eae" },
-  Restaurantes: { e: "🍽️", c: "#0099d8" },
-  Transporte: { e: "🚗", c: "#87909c" },
-  Compras: { e: "🛍️", c: "#00668e" },
-  Ocio: { e: "🎬", c: "#23a6dd" },
-  Suscripciones: { e: "🔁", c: "#4f7a94" },
-  Salud: { e: "🩺", c: "#7fc8e8" },
-  Viajes: { e: "✈️", c: "#9dd5ee" },
-  Seguros: { e: "🛡️", c: "#5b6470" },
-  Bizum: { e: "📲", c: "#0e8fc4" },
-  Transferencias: { e: "🔄", c: "#3d6b85" },
-  Ahorro: { e: "🐷", c: "#007eae" },
-  Efectivo: { e: "🏧", c: "#b4bcc6" },
-  Impuestos: { e: "🏛️", c: "#6b7682" },
-  Intereses: { e: "📈", c: "#0099d8" },
+  Nómina: { e: "💼", c: "#3d9be0" },
+  "Otros ingresos": { e: "💰", c: "#9ccff5" },
+  Vivienda: { e: "🏠", c: "var(--ds-chart-3)" },
+  Suministros: { e: "💡", c: "#f5d04b" },
+  Supermercado: { e: "🛒", c: "#3d9be0" },
+  Restaurantes: { e: "🍽️", c: "#f6c79b" },
+  Transporte: { e: "🚗", c: "#8c96a2" },
+  Compras: { e: "🛍️", c: "#1e4a66" },
+  Ocio: { e: "🎬", c: "#9ccff5" },
+  Suscripciones: { e: "🔁", c: "#e0a93a" },
+  Salud: { e: "🩺", c: "#7fc8b0" },
+  Viajes: { e: "✈️", c: "#2a6085" },
+  Seguros: { e: "🛡️", c: "#c3c8ce" },
+  Bizum: { e: "📲", c: "#5aaee6" },
+  Transferencias: { e: "🔄", c: "#474e57" },
+  Ahorro: { e: "🐷", c: "#3d9be0" },
+  Efectivo: { e: "🏧", c: "#dfe2e5" },
+  Impuestos: { e: "🏛️", c: "#e98b6f" },
+  Intereses: { e: "📈", c: "#9ccff5" },
 };
 export const cat = (c: string) => CAT[c] ?? { e: "•", c: "#87909c" };
 

@@ -12,6 +12,21 @@ con un **modo demo** que simula el LLM con reglas.
 |---|---|---|
 | ![Bienvenida](docs/welcome.png) | ![Bizum](docs/bizum.png) | ![Móvil](docs/movil.png) |
 
+## Versión compartible (un solo HTML, sin servidor)
+
+Para enseñarlo a alguien en el móvil sin instalar nada:
+
+- **Enlace de claude.ai**: la versión publicada como página de Claude. Quien la abra con su cuenta de Claude
+  puede usar **Claude como LLM** (con su propio uso, pide permiso la primera vez); si no, funciona en modo demo.
+- **Archivo** [`share/finora-chat.html`](share/finora-chat.html): ábrelo en cualquier navegador o súbelo a
+  un hosting estático (GitHub Pages, Netlify Drop…). Funciona en modo demo o con una clave gratuita de
+  Groq/Gemini/OpenRouter en ⚙︎ Ajustes.
+
+En esta versión el **servidor MCP, los datos y los widgets corren dentro de la página**: el cliente MCP se
+conecta al servidor por un transporte en memoria (`InMemoryTransport`) y los 13 widgets comparten un único
+bundle. Se genera con `npm run build:share` (`src/standalone/`, `vite.standalone.config.ts`,
+`scripts/build-standalone.mjs`).
+
 ## Arrancar (lanzadera)
 
 **Opción 1 · Doble clic en tu ordenador** (necesitas [Node.js](https://nodejs.org) 20+):
@@ -73,8 +88,9 @@ La lista de modelos se consulta en vivo al proveedor (`/models`), así que puede
 
 ## Design system
 
-La interfaz usa **Finora DS**: azules corporativos de banca (familia del azul CaixaBank) sobre negros, tipografía
-Plus Jakarta Sans y modo claro/oscuro. Tokens en [`src/design/tokens.css`](src/design/tokens.css) y guía en
+La interfaz usa **Finora DS**, con estilo de app bancaria móvil: lienzo gris claro, tarjetas blancas planas,
+negro azulado para botones y selección, tarjetas destacadas en azul cielo y amarillo, tipografía Figtree y
+modo claro/oscuro. Tokens en [`src/design/tokens.css`](src/design/tokens.css) y guía en
 [`src/design/README.md`](src/design/README.md). El chat los comparte con los widgets mediante las variables estándar
 de MCP Apps, así que todos los widgets heredan la identidad.
 
@@ -176,6 +192,7 @@ El servidor es un MCP estándar, así que sus widgets también funcionan en clie
 |---|---|
 | `npm run lanzar` | Lanzadera: instala, compila si hace falta, configura LLM y abre el navegador |
 | `npm start` | Compila widgets y web y sirve todo en `:8787` |
+| `npm run build:share` | Genera la versión compartible en un solo HTML (`dist/share/`) |
 | `npm run dev` | Widgets en modo watch + backend con recarga + Vite en `:5173` |
 | `npm run build` | Compila `dist/widgets/*.html` y `dist/web` |
 | `npm run mcp:stdio` | Servidor MCP por stdio |

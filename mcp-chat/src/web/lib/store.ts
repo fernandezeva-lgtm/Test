@@ -1,7 +1,7 @@
 // Estado de la app (conversaciones, ajustes) y bucle agéntico: LLM ⇄ herramientas MCP.
 import { useSyncExternalStore } from "react";
 import type { CallToolResult } from "@modelcontextprotocol/client";
-import { complete, fetchProviders, streamChat, type ChatMsg, type LlmSettings, type ProviderInfo, type ToolDef } from "./llm.ts";
+import { complete, fetchProviders, getClaudeSample, streamChat, type ChatMsg, type LlmSettings, type ProviderInfo, type ToolDef } from "./llm.ts";
 import { McpConnection } from "./mcp.ts";
 
 export type Part =
@@ -96,10 +96,17 @@ export function emit(persist = false) {
   }
 }
 export const getState = () => state;
+const save = (k: string, v: unknown) => {
+  try {
+    localStorage.setItem(k, JSON.stringify(v));
+  } catch {
+    /* almacenamiento no disponible (vista previa, modo privado) */
+  }
+};
 export function setState(patch: Partial<State>, persist = false) {
   state = { ...state, ...patch };
-  if (patch.settings) localStorage.setItem(LS.settings, JSON.stringify(state.settings));
-  if (patch.theme) localStorage.setItem(LS.theme, JSON.stringify(state.theme));
+  if (patch.settings) save(LS.settings, state.settings);
+  if (patch.theme) save(LS.theme, state.theme);
   emit(persist);
 }
 export function useStore() {
@@ -216,6 +223,10 @@ export async function send(text: string, fromWidget?: string) {
   const signal = abort.signal;
 
   try {
+    if (state.settings.provider === "claude") {
+      await sendWithClaude(conv, asis, signal);
+      return;
+    }
     for (let step = 0; step < 6; step++) {
       // Contexto aportado por los widgets (ui/update-model-context)
       const ctx = Object.values(conv.modelContext);
@@ -286,6 +297,115 @@ export async function send(text: string, fromWidget?: string) {
     setState({ busy: false }, true);
     const next = queue.shift();
     if (next) setTimeout(() => send(next.text, next.fromWidget), 50);
+  }
+}
+
+/**
+ * Turno con Claude a través de la capacidad `sample` del visor de Artifacts: las herramientas MCP se
+ * ofrecen como funciones de la página; cada llamada pinta su widget en el momento en que Claude la usa.
+ */
+async function sendWithClaude(conv: Conversation, asis: UiMessage, signal: AbortSignal) {
+  const sample = getClaudeSample();
+  if (!sample) throw new Error("Claude no está disponible en esta vista. Elige otro modelo.");
+  const ctx = Object.values(conv.modelContext);
+  const rules =
+    systemPrompt() +
+    "\nUsa las funciones disponibles para consultar datos y mostrar widgets." +
+    (ctx.length ? `\n\nEstado actual de los widgets en pantalla:\n${ctx.map((c) => `- [${c.tool}] ${c.text}`).join("\n")}` : "");
+
+  // Historial en turnos de texto (Claude no recuerda nada entre llamadas).
+  const turns: { role: "user" | "assistant"; content: string }[] = [{ role: "user", content: rules }];
+  for (const m of conv.llm.slice(-30)) {
+    if (m.role === "user") turns.push({ role: "user", content: m.content ?? "" });
+    else if (m.role === "assistant") {
+      const used = m.tool_calls?.map((t) => t.function.name).join(", ");
+      const content = [m.content, used ? `[Usé: ${used}]` : ""].filter(Boolean).join("\n");
+      if (content) turns.push({ role: "assistant", content });
+    } else if (m.role === "tool") {
+      const last = turns[turns.length - 1];
+      const txt = `[Resultado]: ${(m.content ?? "").slice(0, 1500)}`;
+      if (last.role === "assistant") last.content += "\n" + txt;
+      else turns.push({ role: "assistant", content: txt });
+    }
+  }
+
+  const limits = await sample.limits?.().catch(() => null);
+  const max = limits?.tools?.maxCount ?? 20;
+  const calls: { id: string; name: string; args: Record<string, unknown>; result: string }[] = [];
+  let committed = 0;
+  let lastLen = 0;
+  let cur: { type: "text"; text: string } | null = null;
+  const tools = mcp
+    .modelTools()
+    .slice(0, max)
+    .map((t) => {
+      const schema: Record<string, unknown> = { ...(t.inputSchema as Record<string, unknown>) };
+      delete schema.$schema;
+      if (!schema.type) schema.type = "object";
+      return {
+        name: t.name,
+        description: (t.description ?? t.title ?? t.name).slice(0, 700),
+        inputSchema: schema,
+        execute: async (input: Record<string, unknown>) => {
+          committed = lastLen;
+          cur = null;
+          const id = `s_${uid()}`;
+          const args = input && typeof input === "object" ? input : {};
+          const part: Extract<Part, { type: "tool" }> = { type: "tool", id, name: t.name, args, status: "running", uiUri: mcp.uiUriFor(t.name) };
+          asis.parts.push(part);
+          emit();
+          const r = await mcp.callTool(t.name, args);
+          part.result = r;
+          part.status = r.isError ? "error" : "done";
+          const text = resultText(r);
+          calls.push({ id, name: t.name, args, result: text });
+          log("tool", `Claude → ${t.name}(${JSON.stringify(args)})`);
+          emit(true);
+          if (r.isError) throw new Error(text);
+          return text.slice(0, 6000);
+        },
+      };
+    });
+
+  let full = "";
+  try {
+    const res = await sample(turns, {
+      tools,
+      modelTier: state.settings.model || "quick",
+      signal,
+      onText: ({ text }: { text: string }) => {
+        full = text;
+        lastLen = text.length;
+        const seg = text.slice(committed).replace(/^\s+/, "");
+        if (!seg) return;
+        if (!cur) {
+          cur = { type: "text", text: "" };
+          asis.parts.push(cur);
+        }
+        cur.text = seg;
+        emit();
+      },
+    });
+    full = res.text;
+    if (res.truncated) asis.parts.push({ type: "notice", text: "La respuesta se ha cortado por longitud." });
+  } catch (e) {
+    const err = e as { code?: string; message?: string };
+    if (err.code === "cancelled") return;
+    const msg: Record<string, string> = {
+      not_granted: "No has dado permiso a esta página para usar Claude. Puedes cambiarlo en el menú Permisos del artefacto o elegir el modo demo.",
+      sampling_disabled: "Claude no está disponible para esta cuenta. Elige el modo demo.",
+      rate_limited: "Has hecho muchas peticiones seguidas o alcanzaste tu límite de uso. Prueba en un rato.",
+      tools_unavailable: "Esta vista no permite que Claude use herramientas. Elige el modo demo.",
+      session_expired: "Tu sesión de Claude ha caducado: vuelve a iniciar sesión.",
+    };
+    asis.parts.push({ type: "notice", text: msg[err.code ?? ""] ?? `Claude no pudo responder (${err.code ?? "error"}). ${err.message ?? ""}`, tone: "error" });
+  } finally {
+    conv.llm.push({
+      role: "assistant",
+      content: full || null,
+      ...(calls.length && { tool_calls: calls.map((c) => ({ id: c.id, type: "function" as const, function: { name: c.name, arguments: JSON.stringify(c.args) } })) }),
+    });
+    for (const c of calls) conv.llm.push({ role: "tool", tool_call_id: c.id, content: c.result });
   }
 }
 

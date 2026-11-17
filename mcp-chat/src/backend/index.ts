@@ -7,6 +7,7 @@ import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { createMcpHandler } from "@modelcontextprotocol/server";
 import { createBankServer } from "../bank/server.ts";
+import { widgetHtmlFromDisk } from "../bank/widgets-fs.ts";
 import { chat, defaultProvider, listModels, providerStatus, type ChatRequest } from "./llm.ts";
 
 // Carga .env / .env.local sin dependencias.
@@ -24,7 +25,7 @@ const PORT = Number(process.env.PORT || 8787);
 const app = new Hono();
 
 // ---- MCP (Streamable HTTP). Cualquier cliente MCP puede conectarse a /mcp ----
-const mcp = createMcpHandler(() => createBankServer(), {
+const mcp = createMcpHandler(() => createBankServer(widgetHtmlFromDisk), {
   onerror: (e) => console.error("[mcp]", e.message),
 });
 app.all("/mcp", (c) => mcp.fetch(c.req.raw));

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchModels } from "../lib/llm.ts";
+import { fetchModels, isStandalone } from "../lib/llm.ts";
 import { clearChats, mcp, setState, useStore } from "../lib/store.ts";
 
 export function Settings({ onClose }: { onClose: () => void }) {
@@ -68,9 +68,13 @@ export function Settings({ onClose }: { onClose: () => void }) {
           <h3>Conector MCP</h3>
           <p className="muted">
             <b>{mcp.serverName}</b> · {mcp.tools.length} herramientas ({mcp.modelTools().length} visibles para el modelo) · {mcp.prompts.length} prompts.
-            Puedes usar este mismo servidor desde Claude, ChatGPT, VS Code o MCPJam:
+            {isStandalone() ? "" : "Puedes usar este mismo servidor desde Claude, ChatGPT, VS Code o MCPJam:"}
           </p>
-          <pre className="code">{`URL (Streamable HTTP): ${mcpUrl}\n\n// Claude Desktop / stdio\n{ "mcpServers": { "finora": { "command": "npx", "args": ["tsx", "<ruta>/mcp-chat/src/bank/stdio.ts"] } } }`}</pre>
+          {isStandalone() ? (
+            <p className="muted small">En esta versión compartible el servidor MCP, los datos y los widgets funcionan dentro de la propia página (transporte en memoria). Para conectarlo a otros clientes, usa la versión con servidor del repositorio.</p>
+          ) : (
+            <pre className="code">{`URL (Streamable HTTP): ${mcpUrl}\n\n// Claude Desktop / stdio\n{ "mcpServers": { "finora": { "command": "npx", "args": ["tsx", "<ruta>/mcp-chat/src/bank/stdio.ts"] } } }`}</pre>
+          )}
           <div className="row">
             <button
               className="btn"

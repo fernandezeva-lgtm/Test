@@ -32,12 +32,15 @@ await page.addInitScript(() => {
 });
 
 // Reinicia los datos del banco simulado usando un cliente MCP normal.
-{
+// (En la versión compartible no hay /mcp: los datos se reinician solos al cargar la página.)
+try {
   const { Client, StreamableHTTPClientTransport } = await import("@modelcontextprotocol/client");
   const c = new Client({ name: "e2e", version: "1.0.0" });
   await c.connect(new StreamableHTTPClientTransport(new URL("/mcp", BASE)));
   await c.callTool({ name: "reiniciar_demo", arguments: {} });
   await c.close();
+} catch {
+  console.log("(sin servidor MCP HTTP: se asume la versión compartible)");
 }
 await page.goto(BASE);
 await page.waitForSelector(".connector .dot.ready", { timeout: 15000 });

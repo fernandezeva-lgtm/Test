@@ -2,6 +2,9 @@
 // y un modo "demo" sin conexión. Normaliza el streaming a eventos NDJSON sencillos.
 import { demoChat } from "./demo.ts";
 
+// En el navegador (versión compartible) no hay env.
+const env: Record<string, string | undefined> = typeof process !== "undefined" && process.env ? process.env : {};
+
 export interface ChatMsg {
   role: "system" | "user" | "assistant" | "tool";
   content: string | null;
@@ -78,23 +81,23 @@ export function providers(): ProviderDef[] {
     {
       id: "ollama",
       label: "Ollama · local",
-      baseUrl: process.env.OLLAMA_BASE_URL || "http://localhost:11434/v1",
+      baseUrl: env.OLLAMA_BASE_URL || "http://localhost:11434/v1",
       needsKey: false,
-      defaultModel: process.env.OLLAMA_MODEL || "qwen2.5:7b",
+      defaultModel: env.OLLAMA_MODEL || "qwen2.5:7b",
       models: ["qwen2.5:7b", "llama3.1:8b", "qwen3:8b"],
       signupUrl: "https://ollama.com/download",
       notes: "Gratis y privado en tu máquina (modelos con soporte de tools).",
     },
-    ...(process.env.OPENAI_COMPAT_BASE_URL
+    ...(env.OPENAI_COMPAT_BASE_URL
       ? [
           {
             id: "custom",
-            label: process.env.OPENAI_COMPAT_LABEL || "Personalizado (OpenAI compatible)",
-            baseUrl: process.env.OPENAI_COMPAT_BASE_URL,
+            label: env.OPENAI_COMPAT_LABEL || "Personalizado (OpenAI compatible)",
+            baseUrl: env.OPENAI_COMPAT_BASE_URL,
             envKey: "OPENAI_COMPAT_API_KEY",
             needsKey: false,
-            defaultModel: process.env.OPENAI_COMPAT_MODEL || "default",
-            models: [process.env.OPENAI_COMPAT_MODEL || "default"],
+            defaultModel: env.OPENAI_COMPAT_MODEL || "default",
+            models: [env.OPENAI_COMPAT_MODEL || "default"],
           },
         ]
       : []),
@@ -104,12 +107,12 @@ export function providers(): ProviderDef[] {
 export function providerStatus() {
   return providers().map((p) => ({
     ...p,
-    configured: !p.needsKey || Boolean(p.envKey && process.env[p.envKey]),
+    configured: !p.needsKey || Boolean(p.envKey && env[p.envKey]),
   }));
 }
 
 export function defaultProvider() {
-  const pref = process.env.LLM_PROVIDER;
+  const pref = env.LLM_PROVIDER;
   const list = providerStatus();
   if (pref && list.some((p) => p.id === pref)) return pref;
   return list.find((p) => p.id !== "demo" && p.id !== "ollama" && p.configured)?.id ?? "demo";
@@ -135,7 +138,7 @@ export async function* chat(req: ChatRequest, signal?: AbortSignal): AsyncGenera
     yield { type: "error", message: `Proveedor desconocido: ${req.provider}` };
     return;
   }
-  const key = req.apiKey || (p.envKey ? process.env[p.envKey] : undefined);
+  const key = req.apiKey || (p.envKey ? env[p.envKey] : undefined);
   if (p.needsKey && !key) {
     yield { type: "error", message: `Falta la API key de ${p.label}. Añádela en Ajustes o en .env (${p.envKey}). Consíguela gratis en ${p.signupUrl}` };
     return;
@@ -225,7 +228,7 @@ export async function* chat(req: ChatRequest, signal?: AbortSignal): AsyncGenera
 export async function listModels(providerId: string, apiKey?: string): Promise<string[]> {
   const p = providers().find((x) => x.id === providerId);
   if (!p || !p.baseUrl) return p?.models ?? [];
-  const key = apiKey || (p.envKey ? process.env[p.envKey] : undefined);
+  const key = apiKey || (p.envKey ? env[p.envKey] : undefined);
   if (p.needsKey && !key) return p.models;
   try {
     const res = await fetch(`${p.baseUrl.replace(/\/$/, "")}/models`, {

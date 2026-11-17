@@ -1,15 +1,9 @@
 // Servidor MCP "Banco Finora" con MCP Apps: cada herramienta de consulta/operativa
 // declara un recurso ui:// que el host pinta como widget interactivo.
-import { readFileSync, existsSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import { McpServer, type CallToolResult } from "@modelcontextprotocol/server";
 import { registerAppResource, registerAppTool, RESOURCE_MIME_TYPE } from "@modelcontextprotocol/ext-apps/server";
 import { z } from "zod";
 import { bank, BankError, eur, PERIODOS, type Periodo } from "./bank.ts";
-
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..", "..");
-const WIDGETS_DIR = join(ROOT, "dist", "widgets");
 
 export const WIDGETS = {
   posicion: "Posición global",
@@ -26,15 +20,9 @@ export const WIDGETS = {
   objetivos: "Objetivos de ahorro",
   inversiones: "Inversiones",
 } as const;
-type WidgetId = keyof typeof WIDGETS;
+export type WidgetId = keyof typeof WIDGETS;
 const uri = (w: WidgetId) => `ui://finora/${w}.html`;
 
-function widgetHtml(w: WidgetId) {
-  const file = join(WIDGETS_DIR, `${w}.html`);
-  if (!existsSync(file))
-    return `<!doctype html><meta charset="utf-8"><body style="font-family:sans-serif;padding:16px">Widget <b>${w}</b> sin compilar. Ejecuta <code>npm run build:widgets</code>.</body>`;
-  return readFileSync(file, "utf8");
-}
 
 const ok = (texto: string, datos: object): CallToolResult => ({
   content: [{ type: "text", text: texto }],
@@ -57,7 +45,11 @@ const OPS = { readOnlyHint: false, destructiveHint: true, openWorldHint: false }
 const appOnly = { ui: { visibility: ["app"] as ("app" | "model")[] } };
 const periodoSchema = z.enum(Object.keys(PERIODOS) as [Periodo, ...Periodo[]]);
 
-export function createBankServer() {
+/**
+ * Crea el servidor MCP. `widgetHtml` devuelve el HTML de cada widget: en Node se lee de dist/widgets
+ * (widgets-fs.ts); en la versión compartible se genera en el navegador (src/standalone).
+ */
+export function createBankServer(widgetHtml: (id: WidgetId) => string) {
   const server = new McpServer(
     {
       name: "banco-finora",

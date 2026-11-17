@@ -1,5 +1,5 @@
 // Conexión del host (navegador) con el servidor MCP por Streamable HTTP.
-import { Client, StreamableHTTPClientTransport, type CallToolResult, type Tool } from "@modelcontextprotocol/client";
+import { Client, StreamableHTTPClientTransport, type CallToolResult, type Tool, type Transport } from "@modelcontextprotocol/client";
 import { getToolUiResourceUri, isToolVisibilityAppOnly, isToolVisibilityModelOnly, RESOURCE_MIME_TYPE } from "@modelcontextprotocol/ext-apps/app-bridge";
 import type { McpUiResourceCsp, McpUiResourceMeta, McpUiResourcePermissions } from "@modelcontextprotocol/ext-apps";
 
@@ -23,6 +23,8 @@ export class McpConnection {
   serverName = "";
   instructions = "";
   private resources = new Map<string, Promise<UiResource>>();
+  /** Cómo se conecta al servidor: por HTTP (por defecto) o en memoria (versión compartible). */
+  createTransport: () => Transport | Promise<Transport> = () => new StreamableHTTPClientTransport(new URL(this.url, location.href));
 
   constructor(readonly url: string) {
     this.client = new Client(
@@ -33,7 +35,7 @@ export class McpConnection {
   }
 
   async connect() {
-    await this.client.connect(new StreamableHTTPClientTransport(new URL(this.url, location.href)));
+    await this.client.connect(await this.createTransport());
     const v = this.client.getServerVersion();
     this.serverName = (v?.title as string) || v?.name || "Servidor MCP";
     this.instructions = this.client.getInstructions() ?? "";

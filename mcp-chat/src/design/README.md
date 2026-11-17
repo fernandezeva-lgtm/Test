@@ -1,51 +1,61 @@
 # Finora DS
 
-Design system del chat y de los widgets MCP Apps de Banco Finora: **azules corporativos de banca** (familia del
-azul CaixaBank) sobre **negros**. Es una identidad propia de la entidad ficticia Finora: no usa logotipos, nombres
-ni tipografías de ninguna marca real.
+Design system del chat y de los widgets MCP Apps de Banco Finora, con el estilo de una app bancaria móvil:
+**lienzo gris claro, tarjetas blancas planas sin borde, negro azulado para botones y selección**, colores
+suaves (azul cielo, amarillo, melocotón) para tarjetas destacadas y azul petróleo para la ayuda. Es una
+identidad de la entidad ficticia Finora: no usa logotipos, nombres ni tipografías de ninguna marca real.
 
-Fuente única: [`tokens.css`](tokens.css). La importan el chat (`src/web/main.tsx`) y todos los widgets (el build
-la antepone a `src/widgets/lib/styles.css`).
+Fuente única: [`tokens.css`](tokens.css). La importan el chat (`src/web/main.tsx`, `src/standalone/main.tsx`)
+y todos los widgets (el build la antepone a `src/widgets/lib/styles.css`).
 
 ## Color
 
-| Token | Claro | Uso |
+| Token | Valor | Uso |
 |---|---|---|
-| `--fn-blue-600` | `#007EAE` | **Primario**: botones, enlaces, interruptores, serie principal de gráficos |
-| `--fn-blue-500` | `#0099D8` | Acento: foco, detalles de marca, barra del logo |
-| `--fn-blue-400` / `-300` | `#23A6DD` / `#5CBBE4` | Primario en modo oscuro, series secundarias |
-| `--fn-blue-800` / `-900` | `#004B69` / `#002F43` | Fondos de marca profundos (tarjeta virtual, hipotecas) |
-| `--fn-black` | `#050608` | **Superficies fuertes**: barra lateral, logo, burbuja de la usuaria, tarjeta de crédito |
-| `--fn-ink-900…50` | `#121519` … `#F5F7F9` | Grises fríos para superficies, bordes y texto |
-| `--fn-green-600` / `--fn-amber-600` / `--fn-red-600` | `#00875A` / `#B86E00` / `#D0021B` | Estados: éxito, aviso, error |
+| `--fn-gray-100` | `#F2F2F2` | **Lienzo** de la página y fondo de los widgets |
+| `--fn-white` | `#FFFFFF` | **Tarjetas**: planas, sin borde ni sombra, esquinas de 16–18 px |
+| `--fn-ink` | `#1B2129` | Texto principal, **botones principales**, chip/pestaña activa, burbuja de la usuaria, logo |
+| `--fn-gray-700` | `#474E57` | Contorno de chips y botones secundarios |
+| `--fn-gray-600` / `-500` | `#5F6670` / `#7B828B` | Texto secundario y terciario (fechas, subtítulos) |
+| `--fn-blue` | `#3D9BE0` | Interruptores, foco, barras y serie principal de gráficos («Recibido») |
+| `--fn-gray-400` | `#8C96A2` | Serie secundaria («Pendiente») |
+| `--fn-blue-link` | `#1F5C8A` | Enlaces subrayados («Todos los movimientos →») |
+| `--fn-sky` / `--fn-sun` / `--fn-peach` | `#9CCFF5` / `#F5D04B` / `#F6C79B` | Tarjetas destacadas y sugerencias, con texto oscuro |
+| `--fn-petrol` | `#1E4A66` | Banner «¿Tienes dudas?» con botón blanco en píldora |
+| `--fn-green` | `#2E7D32` | Importes a favor (`+0,19 €`), estado correcto |
+| `--fn-amber` / `--fn-red` | `#9A6400` / `#C62828` | Avisos y errores |
 
-Los componentes usan los **semánticos** (`--ds-canvas`, `--ds-surface`, `--ds-text`, `--ds-primary`, `--ds-strong`,
-`--ds-success`…), que se redefinen en modo oscuro (`prefers-color-scheme` y `data-theme="dark"`).
+Los componentes usan los **semánticos** (`--ds-canvas`, `--ds-surface`, `--ds-text`, `--ds-primary`,
+`--ds-accent`, `--ds-link`, `--ds-outline`, `--ds-help`, `--ds-promo-*`…), redefinidos en modo oscuro
+(`prefers-color-scheme` y `data-theme="dark"`): lienzo `#0F1317`, tarjetas `#1A1F25`, botones claros.
 
-**Gráficos**: `--ds-chart-1` (azul), `--ds-chart-2` (negro; gris claro en oscuro), `--ds-chart-3…6` (azules y
-grises). Ingresos/capital = azul; gastos/intereses = negro. Categorías de gasto: escala de azules y grises fríos
-en `src/widgets/lib/runtime.ts` (`CAT`).
+**Gráficos**: `--ds-chart-1` azul, `-2` gris, `-3` negro azulado, `-4` cielo, `-5` amarillo, `-6` petróleo.
+Ingresos/capital = azul; gastos/intereses = gris. Categorías de gasto en `src/widgets/lib/runtime.ts` (`CAT`).
 
 ## Tipografía
 
-**Plus Jakarta Sans** (400–800) para todo; **JetBrains Mono** para datos técnicos. Títulos a 750–800 con
-`letter-spacing` negativo; importes con `tabular-nums`. Si no hay red, cae a la fuente del sistema.
+**Figtree** (Google Fonts, 400–900): titulares muy gruesos (800–900) con `letter-spacing` negativo, texto a
+400–500, importes en 800 con `tabular-nums`. Se carga sin bloquear el arranque; sin red, fuente del sistema.
 
-## Forma
+## Componentes
 
-Radios `6 / 8 / 12 / 16 px`; botones a 10 px (chat) y píldora (widgets); sombras suaves `--ds-shadow-sm/md/lg`;
-foco visible `--ds-focus` (anillo azul de 3 px).
+- **Botón principal**: negro azulado, texto blanco en 800, esquinas de 12 px, ancho completo en formularios.
+- **Botón secundario / chip / pestaña**: píldora blanca con contorno de 1,5 px; la activa, rellena en negro.
+- **Tarjeta**: blanca sobre gris, sin borde; dentro, cajas informativas grises.
+- **Viñeta con check**: círculo negro con ✓ blanco (`.tick`).
+- **Enlace**: azul oscuro subrayado, con flecha.
+- **Banner de ayuda**: petróleo con botón blanco en píldora.
 
 ## Marca
 
-Logo: cuadrado negro con «F» blanca y una franja inferior azul degradada. Aparece en la barra lateral, como avatar
-del asistente, en la cabecera de cada widget y en el favicon.
+Logo: cuadrado negro azulado con «F» blanca y una franja inferior azul y amarilla. Aparece en la barra
+lateral, como avatar del asistente, en la cabecera de cada widget y en el favicon.
 
 ## Cómo llega a los widgets
 
-1. El chat envía en `ui/initialize` las **variables estándar de MCP Apps** (`--color-background-primary`,
-   `--color-text-primary`, `--font-sans`…) con los valores de Finora DS (`src/web/lib/theme.ts`).
+1. El chat envía en `ui/initialize` las **variables estándar de MCP Apps** (`--color-background-*`,
+   `--color-text-*`, `--font-sans`…) con los valores de Finora DS (`src/web/lib/theme.ts`).
 2. El widget usa esas variables si llegan y, si no (otro host como Claude o ChatGPT), cae a los tokens `--ds-*`:
-   las superficies se adaptan al host y la **marca** (azules y negro) se mantiene siempre.
-3. Los recursos `ui://` declaran `_meta.ui.csp.resourceDomains` con Google Fonts para poder cargar la tipografía
+   las superficies se adaptan al host y la marca se mantiene.
+3. Los recursos `ui://` declaran `_meta.ui.csp.resourceDomains` con Google Fonts para cargar la tipografía
    dentro del iframe aislado.

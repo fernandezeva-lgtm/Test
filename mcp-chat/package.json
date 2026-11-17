@@ -36,7 +36,8 @@
     "typecheck": "tsc -p .",
     "test:e2e": "node scripts/e2e.mjs",
     "serve": "tsx src/backend/index.ts",
-    "lanzar": "node scripts/launch.mjs"
+    "lanzar": "node scripts/launch.mjs",
+    "build:share": "node scripts/build-standalone.mjs"
   },
   "engines": {
     "node": ">=20"

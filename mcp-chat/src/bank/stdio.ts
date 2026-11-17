@@ -2,5 +2,6 @@
 //   { "command": "npx", "args": ["tsx", "/ruta/mcp-chat/src/bank/stdio.ts"] }
 import { serveStdio } from "@modelcontextprotocol/server/stdio";
 import { createBankServer } from "./server.ts";
+import { widgetHtmlFromDisk } from "./widgets-fs.ts";
 
-serveStdio(() => createBankServer());
+serveStdio(() => createBankServer(widgetHtmlFromDisk));

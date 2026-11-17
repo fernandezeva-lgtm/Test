@@ -33,16 +33,16 @@ function card(p: Producto) {
     { class: "card fade", style: { padding: "0", overflow: "hidden", display: "flex", flexDirection: "column" } },
     h(
       "div",
-      { style: { background: `linear-gradient(135deg, ${p.color}, color-mix(in srgb, ${p.color} 60%, white))`, color: "white", padding: "12px 14px", position: "relative" } },
+      { style: { background: p.color, color: "var(--ds-promo-text)", padding: "14px 16px", position: "relative" } },
       h("div", { style: { fontSize: "26px" } }, p.icono),
-      h("div", { class: "b", style: { fontSize: "15px", marginTop: "4px" } }, p.nombre),
+      h("div", { class: "b", style: { fontSize: "17px", fontWeight: "800", marginTop: "6px" } }, p.nombre),
       p.badge ? h("span", { class: `badge ${BADGE[p.badge] ?? ""}`, style: { position: "absolute", top: "10px", right: "10px", boxShadow: "0 1px 4px rgb(0 0 0 / .2)" } }, p.badge === "Recomendado para ti" ? "⭐ " + p.badge : p.badge) : null,
     ),
     h(
       "div",
       { style: { padding: "12px 14px", flex: "1", display: "flex", flexDirection: "column", gap: "8px" } },
       h("div", { class: "small muted" }, p.resumen),
-      h("div", { class: "col", style: { gap: "3px" } }, ...p.ventajas.map((v) => h("div", { class: "small" }, h("span", { class: "pos b" }, "✓ "), v))),
+      h("div", { class: "col", style: { gap: "3px" } }, ...p.ventajas.map((v) => h("div", { class: "small row", style: { gap: "0", alignItems: "flex-start" } }, h("span", { class: "tick" }, "✓"), h("span", null, v)))),
       h(
         "details",
         { class: "small" },

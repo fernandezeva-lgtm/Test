@@ -10,7 +10,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["0 € de comisiones", "Bizum y transferencias inmediatas gratis", "Tarjeta de débito gratuita"],
     condiciones: { Comisiones: "0 €", Requisitos: "Ninguno", "Apertura": "100% online en 5 min" },
     icono: "🏦",
-    color: "#007eae",
+    color: "#9ccff5",
     contratado: true,
   },
   {
@@ -22,7 +22,7 @@ export const PRODUCTOS: Producto[] = [
     condiciones: { TAE: "2,25%", "Saldo máximo remunerado": "50.000 €", Comisiones: "0 €" },
     badge: "Recomendado para ti",
     icono: "📈",
-    color: "#007eae",
+    color: "#9ccff5",
     tae: 2.25,
   },
   {
@@ -34,7 +34,7 @@ export const PRODUCTOS: Producto[] = [
     condiciones: { TAE: "2,60%", Plazo: "12 meses", "Importe mínimo": "1.000 €", Cancelación: "Penalización 0,5%" },
     badge: "Oferta",
     icono: "🔒",
-    color: "#00668e",
+    color: "#d6ebfb",
     tae: 2.6,
   },
   {
@@ -45,7 +45,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["Sin cuota el primer año", "Seguro de viaje hasta 300.000 €", "1% de devolución en gasolineras"],
     condiciones: { "Cuota anual": "0 € el 1er año, luego 40 €", TAE: "21,7% en pago aplazado", Límite: "Hasta 6.000 €" },
     icono: "💳",
-    color: "#121519",
+    color: "#f5d04b",
     contratado: true,
   },
   {
@@ -57,7 +57,7 @@ export const PRODUCTOS: Producto[] = [
     condiciones: { "Cuota anual": "0 €", "Cambio de divisa": "Tipo Mastercard sin recargo" },
     badge: "Nuevo",
     icono: "✈️",
-    color: "#121519",
+    color: "#f5d04b",
   },
   {
     id: "prestamo-personal",
@@ -68,7 +68,7 @@ export const PRODUCTOS: Producto[] = [
     condiciones: { TIN: "6,95%", TAE: "7,18%", Importe: "3.000 € - 60.000 €", Plazo: "12 - 96 meses" },
     badge: "Más popular",
     icono: "💶",
-    color: "#0099d8",
+    color: "#f6c79b",
     tin: 6.95,
     tae: 7.18,
   },
@@ -80,7 +80,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["TIN 4,95% para vehículos ECO/0", "Hasta 10 años", "Sin comisión de amortización"],
     condiciones: { TIN: "4,95%", TAE: "5,12%", Importe: "6.000 € - 75.000 €", Plazo: "24 - 120 meses" },
     icono: "🚗",
-    color: "#0099d8",
+    color: "#f6c79b",
     tin: 4.95,
     tae: 5.12,
   },
@@ -92,7 +92,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["TIN fijo 2,65% bonificado", "Hasta el 80% del valor de tasación", "Sin comisión de apertura"],
     condiciones: { TIN: "2,65% (bonificado)", TAE: "3,21%", Plazo: "Hasta 30 años", Financiación: "80%" },
     icono: "🏠",
-    color: "#004b69",
+    color: "#9ccff5",
     tin: 2.65,
     tae: 3.21,
     contratado: true,
@@ -105,7 +105,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["2,15% fijo 10 años", "Luego Euríbor + 0,75%", "Ideal si esperas bajadas de tipos"],
     condiciones: { "TIN fijo": "2,15% (10 años)", "TIN variable": "Euríbor + 0,75%", TAE: "3,02%" },
     icono: "🏡",
-    color: "#004b69",
+    color: "#9ccff5",
     tin: 2.15,
     tae: 3.02,
   },
@@ -117,7 +117,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["Comisión total 0,20%", "Desde 10 €", "Traspasos sin tributar"],
     condiciones: { Riesgo: "4/7", "Comisión": "0,20%", "Rentabilidad 5 años": "+58,4%" },
     icono: "🌍",
-    color: "#2b3138",
+    color: "#f5d04b",
     contratado: true,
   },
   {
@@ -128,7 +128,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["Desgravación fiscal", "Gestión por ciclo de vida", "Aportaciones flexibles"],
     condiciones: { Riesgo: "3/7", "Comisión": "0,85%", "Aportación máxima": "1.500 €/año" },
     icono: "🧓",
-    color: "#2b3138",
+    color: "#f5d04b",
     contratado: true,
   },
   {
@@ -139,7 +139,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["Asistencia 24h", "Daños por agua y robo", "Responsabilidad civil 300.000 €"],
     condiciones: { "Prima desde": "19 €/mes", Franquicia: "0 €" },
     icono: "🛡️",
-    color: "#3d6b85",
+    color: "#fbe4cf",
     contratado: true,
   },
   {
@@ -151,7 +151,7 @@ export const PRODUCTOS: Producto[] = [
     condiciones: { "Prima desde": "32 €/mes", Franquicia: "Opcional 150 €" },
     badge: "Nuevo",
     icono: "🚙",
-    color: "#3d6b85",
+    color: "#fbe4cf",
   },
   {
     id: "seguro-salud",
@@ -161,7 +161,7 @@ export const PRODUCTOS: Producto[] = [
     ventajas: ["Sin copagos", "Videoconsulta 24h", "Dental básico incluido"],
     condiciones: { "Prima desde": "45 €/mes", Carencias: "Sin carencias salvo parto" },
     icono: "🩺",
-    color: "#3d6b85",
+    color: "#fbe4cf",
   },
 ];
 

@@ -5,6 +5,7 @@ import { AppBridge, buildAllowAttribute, PostMessageTransport } from "@modelcont
 import type { McpUiDisplayMode, McpUiHostContext, McpUiResourceCsp } from "@modelcontextprotocol/ext-apps";
 import { getState, hidePart, log, mcp, sampling, send, updateModelContext } from "../lib/store.ts";
 import { hostStyles } from "../lib/theme.ts";
+import { isStandalone } from "../lib/llm.ts";
 
 interface Props {
   toolCallId: string;
@@ -125,7 +126,8 @@ function WidgetFrameImpl({ toolCallId, toolName, uri, args, result, status, them
     };
     bridge.onopenlink = async ({ url }) => {
       const safe = /^(https?:|mailto:|tel:)/i.test(url);
-      if (!safe || !confirm(`El widget quiere abrir:\n${url}\n\n¿Continuar?`)) return { isError: true };
+      // En la página publicada no hay diálogos confirm(): se abre directamente (solo https, mailto y tel).
+      if (!safe || (!isStandalone() && !confirm(`El widget quiere abrir:\n${url}\n\n¿Continuar?`))) return { isError: true };
       log("link", url);
       window.open(url, "_blank", "noopener,noreferrer");
       return {};
@@ -136,6 +138,12 @@ function WidgetFrameImpl({ toolCallId, toolName, uri, args, result, status, them
         const r = c.resource;
         const name = decodeURIComponent(r.uri.split("/").pop() || "archivo");
         const blob = "text" in r ? new Blob([r.text], { type: r.mimeType ?? "text/plain" }) : new Blob([Uint8Array.from(atob(r.blob), (ch) => ch.charCodeAt(0))], { type: r.mimeType ?? "application/octet-stream" });
+        const dl = isStandalone() ? await (globalThis as { claude?: { use(n: string): Promise<{ save(r: { filename: string; data: Blob }): Promise<unknown> } | null> } }).claude?.use("downloads").catch(() => null) : null;
+        if (dl) {
+          await dl.save({ filename: name, data: blob }).catch(() => {});
+          log("download", name);
+          continue;
+        }
         const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: name });
         a.click();
         setTimeout(() => URL.revokeObjectURL(a.href), 2000);
